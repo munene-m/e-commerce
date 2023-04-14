@@ -1,5 +1,9 @@
+<script setup>
+import Books from '../components/Books.vue'
+</script>
+
 <template>
-  <div class="md:w-4/5 w-11/12 m-auto mt-24 flex items-center flex-col">
+  <div class="md:w-4/5 w-11/12 m-auto mt-24 flex items-center flex-col font-open-sans">
     <img
       class="absolute w-inherit rounded-3xl h-3/4 md:h-2/3 bg-cover"
       src="../assets/booksInShelf.jpg"
@@ -19,7 +23,7 @@
       </button>
     </div>
   </div>
-  <div class="relative mt-32 sm:mt-52 md:mt-40 xl:mt-56">
+  <div class="relative mt-32 sm:mt-52 md:mt-40 xl:mt-56 font-open-sans">
     <h2 class="text-emerald-800 font-bold text-xl text-center sm:text-center md:text-start sm:ml-auto md:ml-24  ">Shop from our categories</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 md:mx-4 md:gap-4 gap-4 mt-5 sm:mt-10 place-items-center">
         <div class="w-48 relative">
@@ -44,4 +48,6 @@
         </div>
     </div>
   </div>
+  <hr class="mt-7 ">
+<Books/>
 </template>

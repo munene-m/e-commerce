@@ -1,7 +1,7 @@
 <template>
-  <div class="about">
-    <h1>This is the cart page</h1>
-  </div>
+    <main class="font-open-sans relative mt-20">
+        <h1>Cart</h1>
+    </main>
 </template>
 
 <style>

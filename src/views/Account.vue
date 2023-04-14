@@ -1,9 +1,9 @@
 <script setup>
-
+import RegisterComponent from '../components/RegisterComponent.vue';
 </script>
 
 <template>
-  <main>
-    <h1>Account page</h1>
+  <main class="relative mt-20">
+    <RegisterComponent/>
   </main>
 </template>
