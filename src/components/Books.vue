@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, computed } from 'vue'
 
 const books = ref([
   {
@@ -76,18 +76,33 @@ const books = ref([
     price: 9.99,
     image: 'https://via.placeholder.com/150'
   }
+  
 ])
+const props = defineProps({
+    searchItem: String
+})
+const filteredBooks = computed(() => {
+  return books.value.filter(book => {
+    return book.name.toLowerCase().includes(props.searchItem.toLowerCase())
+  })
+})
+const booksFound = computed(() => {
+    return filteredBooks.value.length > 0
+})
 </script>
 
 <template>
-    <h3 class="my-5 md:my-10 text-emerald-800 font-bold text-xl text-center md:text-start md:ml-10 font-open-sans">Books for you</h3>
-  <div class="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 place-items-center font-open-sans">
-    <div v-for="book in books" :key="book.id" class="p-4 rounded-lg sm:w-5/6 w-3/4 h-full flex flex-col items-start">
+    
+  <div v-if="booksFound" class="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 place-items-center font-open-sans">
+    <div v-for="book in filteredBooks" :key="book.id" class="p-4 rounded-lg sm:w-5/6 w-3/4 h-full flex flex-col items-start">
       <img class="w-full rounded" :src="book.image" :alt="book.name" />
       <h2 class="mt-2 font-bold text-emerald-800">{{ book.name }}</h2>
       <p>{{ book.description }}</p>
       <p>Price: {{ book.price }}</p>
       <button class=" bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:bg-white hover:text-emerald-800 transition duration-500">Add to cart</button>
     </div>
+  </div>
+  <div v-else>
+    <p class="text-emerald-800 text-center">The book you have searched is unavailable.</p>
   </div>
 </template>
