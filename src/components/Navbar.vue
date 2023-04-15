@@ -1,6 +1,5 @@
 <script setup>
 import MenuIcon from '../components/icons/MenuIcon.vue'
-import SearchIcon from './icons/SearchIcon.vue';
 import CartIcon from './icons/CartIcon.vue';
 import PersonIcon from './icons/PersonIcon.vue';
 import { ref } from 'vue';
@@ -24,10 +23,7 @@ import { ref } from 'vue';
           </div>
         </div>
         <ul :class="showMenu ? 'flex' : 'hidden'" class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0">
-            <div class="flex  md:items-center justify-start md:px-4">                
-                <input class="font-open-sans w-72 h-8 px-6 md:w-40 lg:w-72 outline-transparent text-gray-800 rounded-lg" type="search" name="search" placeholder="Search product" id="">
-                <SearchIcon class="absolute  text-gray-800 w-5 m-1 py-1"/>
-            </div>
+
           <li><RouterLink class="text-emerald-800 font-open-sans" to="/categories">Categories</RouterLink></li>
           <li><RouterLink class="text-emerald-800 font-open-sans" to="/new-items">What's new</RouterLink></li>
           <li><RouterLink class="text-emerald-800 flex items-center font-open-sans" to="/account"><PersonIcon/>Account</RouterLink></li>
