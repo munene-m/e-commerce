@@ -2,10 +2,10 @@
 import { reactive, computed, ref, watchEffect } from "vue";
 import { useVuelidate } from '@vuelidate/core'
 import { required, sameAs, minLength, email, helpers } from '@vuelidate/validators'
-// import { useAuthStore } from '../stores/auth'
+import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router';
 
-// const authStore = useAuthStore()
+const authStore = useAuthStore()
 // watchEffect(() => {
 //   if(authStore.user){
 //     router.push("/account-settings")
@@ -31,7 +31,7 @@ const v$ = useVuelidate(rules, formData)
 const handleSubmit = async () =>{
     const result = await v$.value.$validate()
     if(result){
-        authStore.register(formData.username, formData.email, formData.password)
+        authStore.signup(formData.username, formData.email, formData.password)
         //router.push("/home-page")
     }
     setTimeout(() => {
