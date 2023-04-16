@@ -1,5 +1,13 @@
 <script setup>
 import { ref, computed } from 'vue'
+import { useCartStore } from '../stores/cart'
+
+const cartStore = useCartStore()
+
+function addToCart (item) {
+cartStore.addToCart(item)
+console.log(cartStore.cart.cartItems);
+}
 
 const books = ref([
   {
@@ -7,74 +15,85 @@ const books = ref([
     name: 'The Great Gatsby',
     description: 'A novel by F. Scott Fitzgerald',
     price: 10.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   },
   {
     id: 2,
     name: 'To Kill a Mockingbird',
     description: 'A novel by Harper Lee',
     price: 12.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   },
   {
     id: 3,
     name: '1984',
     description: 'A novel by George Orwell',
     price: 9.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   },
   {
     id: 4,
     name: 'The Great Gatsby',
     description: 'A novel by F. Scott Fitzgerald',
     price: 10.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   },
   {
     id: 5,
     name: 'To Kill a Mockingbird',
     description: 'A novel by Harper Lee',
     price: 12.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   },
   {
     id: 6,
     name: '1984',
     description: 'A novel by George Orwell',
     price: 9.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   },
   {
     id: 7,
     name: '1984',
     description: 'A novel by George Orwell',
     price: 9.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   },
   {
     id: 8,
     name: '1984',
     description: 'A novel by George Orwell',
     price: 9.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   },  {
     id: 9,
     name: '1984',
     description: 'A novel by George Orwell',
     price: 9.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   },  {
     id: 10,
     name: '1984',
     description: 'A novel by George Orwell',
     price: 9.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   },  {
     id: 11,
     name: '1984',
     description: 'A novel by George Orwell',
     price: 9.99,
-    image: 'https://via.placeholder.com/150'
+    image: 'https://via.placeholder.com/150',
+    quantity: 0
   }
   
 ])
@@ -99,7 +118,7 @@ const booksFound = computed(() => {
       <h2 class="mt-2 font-bold text-emerald-800">{{ book.name }}</h2>
       <p>{{ book.description }}</p>
       <p>Price: {{ book.price }}</p>
-      <button class=" bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:bg-white hover:text-emerald-800 transition duration-500">Add to cart</button>
+      <button @click="addToCart(book)" class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500">Add to cart</button>
     </div>
   </div>
   <div v-else>
