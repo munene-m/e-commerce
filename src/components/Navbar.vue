@@ -2,7 +2,11 @@
 import MenuIcon from '../components/icons/MenuIcon.vue'
 import CartIcon from './icons/CartIcon.vue';
 import PersonIcon from './icons/PersonIcon.vue';
+import { useCartStore } from '../stores/cart';
 import { ref } from 'vue';
+
+const cartStore = useCartStore()
+
   let showMenu = ref(false)
   function toggleNav() {
   return (showMenu.value = !showMenu.value);
@@ -27,7 +31,7 @@ import { ref } from 'vue';
           <li><RouterLink class="text-emerald-800 font-open-sans" to="/categories">Categories</RouterLink></li>
           <li><RouterLink class="text-emerald-800 font-open-sans" to="/new-items">What's new</RouterLink></li>
           <li><RouterLink class="text-emerald-800 flex items-center font-open-sans" to="/account"><PersonIcon/>Account</RouterLink></li>
-          <li><RouterLink class="text-emerald-800 flex items-center font-open-sans" to="/cart"><CartIcon/><span class="p-0.5 bg-emerald-800 text-white rounded-e-full rounded-s-full fixed top-3 right-4 text-xs">10</span></RouterLink></li>
+          <li><RouterLink class="text-emerald-800 flex items-center font-open-sans" to="/cart"><CartIcon/><span class="pl-1 bg-emerald-800 text-white rounded-full w-4 h-4 fixed top-4 right-2 text-xs ">{{ cartStore.cart.cartItems.length }}</span></RouterLink></li>
         </ul>
       </nav>
 </template>
