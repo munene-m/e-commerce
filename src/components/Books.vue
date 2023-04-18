@@ -112,12 +112,12 @@ const booksFound = computed(() => {
 
 <template>
     
-  <div v-if="booksFound" class="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 place-items-center font-open-sans">
-    <div v-for="book in filteredBooks" :key="book.id" class="p-4 rounded-lg sm:w-5/6 w-3/4 h-full flex flex-col items-start">
-      <img class="w-full rounded" :src="book.image" :alt="book.name" />
+  <div v-if="booksFound" class="flex overflow-auto pb-4 whitespace-nowrap items-end sm:grid sm:gap-5 sm:grid-cols-2 md:grid-cols-4 sm:place-items-center font-open-sans" style="::-webkit-scrollbar { display: none; }">
+    <div v-for="book in filteredBooks" :key="book.id" class="p-4 rounded-lg sm:w-5/6 w-full h-full flex flex-col items-start mr-5">
+      <img class="w-full h-full rounded object-cover" :src="book.image" :alt="book.name" />
       <h2 class="mt-2 font-bold text-emerald-800">{{ book.name }}</h2>
-      <p>{{ book.description }}</p>
-      <p>Price: {{ book.price }}</p>
+      <p class="text-sm ">{{ book.description }}</p>
+      <p class="text-xs sm:text-sm">Price: {{ book.price }}</p>
       <button @click="addToCart(book)" class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500">Add to cart</button>
     </div>
   </div>
