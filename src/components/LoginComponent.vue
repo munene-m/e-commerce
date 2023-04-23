@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, computed, ref, watchEffect } from "vue";
+import { reactive, computed, watchEffect } from "vue";
 import { useVuelidate } from '@vuelidate/core'
 import { required, minLength, email, helpers } from '@vuelidate/validators'
 import { useAuthStore } from '../stores/auth'
@@ -7,6 +7,13 @@ import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore()
 const router = useRouter()
+
+watchEffect(() => {
+  if(authStore.user){
+    router.push("/cart")
+  }
+
+})
 
 const formData = reactive({
     email: "",
@@ -23,7 +30,6 @@ const handleSubmit = async () =>{
     const result = await v$.value.$validate()
     if(result){
         authStore.login(formData.email, formData.password)
-        //router.push("/home-page")
     }
     setTimeout(() => {
         formData.email = "",
@@ -33,7 +39,7 @@ const handleSubmit = async () =>{
 </script>
 <template>
   <div class="mt-40">
-    <form class="w-96 h-screen m-auto p-6 font-open-sans" @submit.prevent="handleSubmit">
+    <form class="w-full sm:w-96 h-screen m-auto p-6 font-open-sans" @submit.prevent="handleSubmit">
       <h3 class="text-center font-bold text-emerald-800 m-5 text-2xl">LOG IN</h3>
       <label class="block text-base" for="email">Email address</label><br />
       <input
