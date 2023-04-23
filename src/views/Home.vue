@@ -8,7 +8,7 @@ const searchItem = ref('')
 
 <template>
 
-  <div class="md:w-4/5 w-11/12 m-auto mt-24 flex items-center flex-col font-open-sans">
+  <div class="md:w-4/5 w-11/12 m-auto my-24 flex items-center flex-col font-open-sans">
     <img
       class="absolute w-inherit rounded-3xl h-3/4 md:h-2/3 bg-cover"
       src="../assets/booksInShelf.jpg"
@@ -30,7 +30,7 @@ const searchItem = ref('')
       </button>
     </div>
   </div>
-  <div class="relative mt-32 sm:mt-52 md:mt-40 xl:mt-56">
+  <div class="relative pt-48  xl:pt-56">
     <h2
       class="text-emerald-800 font-bold text-xl text-center sm:text-center md:text-start sm:ml-auto md:ml-24"
     >
