@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,7 +33,18 @@ const router = createRouter({
     {
       path: '/cart',
       name: 'cart',
-      component: () => import('../views/Cart.vue')
+      component: () => import('../views/Cart.vue'),
+      meta: {
+        auth: true
+      }
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('../views/Admin.vue'),
+      meta: {
+        isAdmin: true
+      }
     },
     {
       /* Wildcard path to catch other paths */
@@ -41,6 +53,49 @@ const router = createRouter({
       component: () => import('../views/NotFound.vue')
   }
   ]
+})
+
+const currentUser = () => {
+  return new Promise(( resolve, reject ) => {
+    const authStore = useAuthStore();
+    const token = authStore.user;
+    resolve(token);
+    reject
+  })
+}
+
+const isAdmin = () => {
+  return new Promise(( resolve, reject ) => {
+    const authStore = useAuthStore();
+    const admin = authStore.admin;
+    resolve(admin);
+    reject
+  })
+}
+
+router.beforeEach( async (to, from, next) => {
+  if(to.matched.some((record) => record.meta.auth)) {
+    if(await currentUser()) {
+      next();
+    } else {
+      next("/login")
+    }
+  } else {
+    next();
+  }
+
+})
+
+router.beforeEach(async (to, from, next) => {
+  if(to.matched.some((record) => record.meta.isAdmin)){
+    if(await isAdmin()) {
+      next()
+    } else {
+      next("/")
+    }
+  } else {
+    next();
+  }
 })
 
 export default router
