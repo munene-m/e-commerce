@@ -6,11 +6,13 @@ import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore()
-// watchEffect(() => {
-//   if(authStore.user){
-//     router.push("/account-settings")
-//   }
-// })
+const router = useRouter()
+watchEffect(() => {
+  if(authStore.user){
+    router.push("/cart")
+  }
+
+})
 
 const formData = reactive({
     username:"",
@@ -32,7 +34,6 @@ const handleSubmit = async () =>{
     const result = await v$.value.$validate()
     if(result){
         authStore.signup(formData.username, formData.email, formData.password)
-        //router.push("/home-page")
     }
     setTimeout(() => {
         formData.username = "",
@@ -44,7 +45,7 @@ const handleSubmit = async () =>{
 </script>
 <template>
   <div class="mt-32">
-    <form class="w-96 h-screen  m-auto p-6 font-open-sans" @submit.prevent="handleSubmit">
+    <form class="w-full sm:w-96 h-screen  m-auto p-6 font-open-sans" @submit.prevent="handleSubmit">
       <h3 class="text-center font-bold text-emerald-800 m-5 text-2xl">CREATE ACCOUNT</h3>
       <label class="block text-base" for="userName">User name</label><br />
       <input
@@ -86,7 +87,7 @@ const handleSubmit = async () =>{
       <br />
 
       <button
-      class="w-full bg-emerald-800 text-white rounded-xl px-2 py-3 mt-2"
+      class="w-full bg-emerald-800 text-white rounded-xl px-2 py-3 mt-2 hover:scale-95 duration-500"
       id="signupBtn" type="submit">Create account</button>
       <p class="text-center">
         Have an account? <RouterLink class="text-emerald-800" to="/login">Log in</RouterLink>
@@ -94,131 +95,3 @@ const handleSubmit = async () =>{
     </form>
   </div>
 </template>
-
-
-<!-- <style scoped>
-.form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  min-height: 100vh;
-  padding-top:8rem;
-}
-.formBeforeAuth{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  min-height: 100vh;
-  padding-top: 5rem;
-}
-.login-image {
-  background-color: #f4605b;
-  border-radius: 0 4px 4px 0;
-}
-.login-image img {
-  display: flex;
-  align-items: center;
-  height: 180px;
-  padding-top: 180px;
-  margin: auto;
-}
-.login-image p {
-  color: white;
-  text-align: center;
-  margin: auto;
-  width:18rem;
-}
-#signupForm {
-  width: 300px;
-  margin: 40px auto;
-  padding: 14px 28px;
-  text-align: left;
-  /* border: 1px solid #919191; */
-  border-radius: 8px;
-  background: #fff;
-}
-
-form > h3 {
-  text-align: center;
-  font-size: 22px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-label {
-  display: block;
-  font-size: 16px;
-}
-
-.radioBtns {
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 1px solid #ccc;
-  border-radius: 8px;
-  margin-top: 1rem;
-}
-#labelRadio1, #labelRadio2{
-  display: inline;
-  cursor: pointer;
-}
-#labelRadio1{
-  margin-right: 12px;
-}
-#freelancer, #client{
-  accent-color: crimson;
-  cursor: pointer;
-}
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-  width: 100%;
-  margin-bottom: 8px;
-  box-sizing: border-box;
-  border: none;
-  outline: none;
-  border-bottom: 2px solid #919191;
-  line-height: 1.5em;
-  font-family: inherit;
-    font-weight: 800;
-    font-size: 14px;
-}
-.errorMsg{
-    color: red;
-    font-size: 12px; 
-    margin:0;
-}
-button[type="submit"] {
-  width: 100%;
-  background-color: #f4605b;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-  font-size: 17px;
-}
-
-button[type="submit"]:hover {
-  background-color: rgb(236, 55, 91);
-  transform: scale(0.98);
-}
-.login {
-  text-align: center;
-}
-.login a {
-  color: crimson;
-  text-decoration: none;
-  font-weight: 600;
-}
-@media only screen and (max-width: 40em) {
-  .form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-min-height: 50vh;
-  }
-  .login-image{
-    display: none;
-  }
-}
-</style> -->
