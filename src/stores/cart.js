@@ -1,8 +1,8 @@
 import { reactive } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
-export const useCartStore = defineStore('counter', () => {
-  const STORAGE_KEY = "cartItens"
+export const useCartStore = defineStore('cart', () => {
+  const STORAGE_KEY = "cartItems"
 
   const cart = reactive({
     cartItems: []
@@ -41,7 +41,7 @@ export const useCartStore = defineStore('counter', () => {
   }
   const decrementQuantity = (id) => {
     const item = cart.cartItems.find(item => item.id === id)
-    if (item.quantity > 0) {
+    if (item.quantity > 1) {
       item.quantity--;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems));
     }
