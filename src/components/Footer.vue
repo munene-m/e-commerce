@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 place-items-start sm:place-items-center gap-5 z-10 relative bottom-0 right-0 left-0 bg-slate-200 p-8 md:mx-4 md:rounded-t-lg mt-20 font-open-sans">
+    <div class="grid grid-cols-1 place-items-center sm:grid-cols-2 md:grid-cols-3  sm:place-items-center gap-5 z-10 relative bottom-0 right-0 left-0 bg-slate-200 p-8 md:mx-4 md:rounded-t-lg mt-20 font-open-sans">
         <div class="w-60 h-full">
             <h2 class=" text-emerald-800 font-extrabold mb-5"><RouterLink to="/">E-COMMERCE</RouterLink></h2>
             <p>Find all the books you need from all genres in our shop.</p>
