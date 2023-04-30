@@ -4,24 +4,28 @@ import axios from 'axios'
 export const useProductStore = defineStore('product', () => {
   const user = JSON.parse(localStorage.getItem("token"));
 
+  async function addProduct(name, description, quantity, price, image) {
+        const formData = new FormData();
+        const boundary = Math.random().toString().substring(2);
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('quantity', quantity);
+        formData.append('price', price);
+        formData.append('image', image);
+        console.log(name, description, quantity, price, image);
 
-  async function addProduct(formData) {
-    // const user = JSON.parse(localStorage.getItem("token"));
-    const data = new FormData();
-    data.append('name', formData.name);
-    data.append('description', formData.description);
-    data.append('quantity', formData.quantity);
-    data.append('price', formData.price);
-    data.append('image', formData.image);
-  
-    await axios.post("http://localhost:5500/products/create", data, {
-      headers: {
-        Authorization: `Bearer ${user}`,
-      },
-    }).then((response) => {
-      console.log(response)
-    }).catch(err => console.log(err))
-  }
+        const config = {
+            headers: {
+                "Content-Type": `multipart/form-data; boundary=${boundary}`,
+                Authorization: `Bearer ${user}`,
+              },
+        }
+        console.log(config);
+        await axios.post("http://localhost:5500/products/create", formData, config)
+        .then((response) => {
+            console.log(response.data)
+        }).catch((err) => console.log(err))
+    }
     return { addProduct }
 })
 
