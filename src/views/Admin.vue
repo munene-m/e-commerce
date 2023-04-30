@@ -5,6 +5,9 @@ import { reactive, computed } from 'vue';
 import { useProductStore } from '../stores/products';
 
 const productStore = useProductStore()
+function onFileSelected(event) {
+    formData.image = event.target.files[0];
+}
 const formData = reactive({
     name:"",
     description: "",
@@ -12,37 +15,29 @@ const formData = reactive({
     price: "",
     image: null
 })
-function onFileSelected(event) {
-    formData.image = event.target.files[0]
-    console.log(formData.image);
-}
+
 const rules = computed(() => {
     return{
         name: { required: helpers.withMessage("Product name is required", required) },
-        description: { required: helpers.withMessage("Product description is required", required)},
+        description: { required: helpers.withMessage("Product description is required", required) },
         quantity: { required: helpers.withMessage("Product quantity is required", required)},
         price: { required: helpers.withMessage("Price is required", required)}
     }
 })
 const v$ = useVuelidate(rules, formData)
-async function handleSubmit() {
-const result = await v$.value.$validate();
-if (result) {
-    const formData = new FormData();
-    formData.append('name', formData.name);
-    formData.append('description', formData.description);
-    formData.append('quantity', formData.quantity);
-    formData.append('price', formData.price);
-    formData.append('image', formData.image);
-    productStore.addProduct(formData);
-}
-setTimeout(() => {
-formData.name = "",
-formData.description = "",
-formData.quantity = "",
-formData.price = "",
-formData.image = null;
-}, 1000);
+const handleSubmit = async () => {
+    const result = await v$.value.$validate()
+    if(result) {
+        console.log()
+        productStore.addProduct(formData.name, formData.description, formData.quantity, formData.price, formData.image)
+    }
+    setTimeout(() => {
+        formData.name = "",
+        formData.description = "",
+        formData.quantity  = "",
+        formData.price = "",
+        formData.image = null
+    }, 1000)
 }
 </script>
 
