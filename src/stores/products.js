@@ -12,7 +12,6 @@ export const useProductStore = defineStore('product', () => {
         formData.append('quantity', quantity);
         formData.append('price', price);
         formData.append('image', image);
-        console.log(name, description, quantity, price, image);
 
         const config = {
             headers: {
@@ -20,7 +19,7 @@ export const useProductStore = defineStore('product', () => {
                 Authorization: `Bearer ${user}`,
               },
         }
-        console.log(config);
+        
         await axios.post("http://localhost:5500/products/create", formData, config)
         .then((response) => {
             console.log(response.data)
