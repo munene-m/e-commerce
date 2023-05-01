@@ -115,15 +115,8 @@ const booksFound = computed(() => {
 </script>
 
 <template>
-  <div
-    v-if="booksFound"
-    class="flex overflow-auto pb-4 whitespace-nowrap items-end sm:grid sm:gap-5 sm:grid-cols-2 md:grid-cols-4 sm:place-items-center font-open-sans"
-    style="
-      ::-webkit-scrollbar {
-        display: none;
-      }
-    "
-  >
+  <div v-if="booksFound" class="flex overflow-auto pb-4 whitespace-nowrap items-end sm:grid sm:gap-5 sm:grid-cols-2 md:grid-cols-4 sm:place-items-center font-open-sans"
+    style="::-webkit-scrollbar { display: none; }">
     <div
       v-for="book in filteredBooks"
       :key="book.id"
@@ -133,22 +126,15 @@ const booksFound = computed(() => {
       <h2 class="mt-2 font-bold text-emerald-800">{{ book.name }}</h2>
       <p class="text-sm">{{ book.description }}</p>
       <p class="text-xs sm:text-sm">Price: {{ book.price }}</p>
-      <button
-        v-if="!authStore.admin"
-        @click="addToCart(book)"
-        class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
-      >
+      <button v-if="!authStore.admin" @click="addToCart(book)"
+        class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500">
         Add to cart
       </button>
       <div v-else>
-        <button
-          class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
-        >
+        <button class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500">
           Edit
         </button>
-        <button
-          class="bg-red-500 text-white rounded-3xl border-2 border-red-500 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500 mx-1"
-        >
+        <button class="bg-red-500 text-white rounded-3xl border-2 border-red-500 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500 mx-1">
           Remove
         </button>
       </div>

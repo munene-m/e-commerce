@@ -53,7 +53,7 @@ const handleSubmit = async () => {
                     <label class="mt-3" for="name">Product description</label>
                     <textarea v-model="formData.description" type="text" class="text-sm outline-transparent w-full  h-24 border py-1 px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded"></textarea>
                     <label class="mt-3 mb-1 block" for="name">Product image</label>
-                    <input type="file" name="image" @change="onFileSelected">
+                    <input type="file"  name="image" @change="onFileSelected">
                 </div>
                 <h2 class="font-bold mt-4 text-xl">Inventory</h2>
                 <div class="p-4 border border-slate-300 rounded-2xl">
