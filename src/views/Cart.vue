@@ -34,12 +34,10 @@ const isCart = computed(() => {
 </script>
 
 <template>
-  <main v-if="isCart" class="font-open-sans relative mt-28 mb-44 h-screen">
-    <div
-      class="bg-slate-200 rounded p-2 m-auto mb-3 w-4/5 sm:w-2/3 md:w-1/2 grid grid-cols-1 sm:grid-cols-2 place-items-evenly"
+  <main v-if="isCart" class="font-open-sans relative mt-28 mb-20">
+    <div class="bg-slate-200 rounded p-2 m-auto mb-3 w-4/5 sm:w-2/3 md:w-1/2 grid grid-cols-1 sm:grid-cols-2 place-items-evenly"
       v-for="item in cartItems"
-      :key="item.id"
-    >
+      :key="item.id">
       <img class="w-full sm:w-full md:w-40" :src="item.image" alt="" />
       <div class="flex flex-col items-start justify-between  sm:items-end sm:justify-between">
         <h1 class="text-emerald-800 font-bold text-lg text-center">{{ item.name }}</h1>
@@ -59,6 +57,8 @@ const isCart = computed(() => {
         </button>
       </div>
     </div>
+    <button  class="bg-emerald-800 m-auto text-white rounded-lg border-2 border-emerald-800  px-3 py-2 mt-9 text-xs cursor-pointer hover:scale-95 transition duration-500 flex items-center">Proceed to checkout</button>
+
   </main>
   <div v-else>
     <p class="font-open-sans text-emerald-800 text-center mt-24 h-screen">Cart is empty</p>
