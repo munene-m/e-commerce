@@ -21,9 +21,15 @@ const router = createRouter({
     }
     ,
     {
-      path: '/categories',
+      path: '/categories/',
       name: 'categories',
       component: () => import('../views/Categories.vue')
+    },
+    {
+      path: "/categories/:category",
+      name: 'category',
+      component: () => import("../components/Category.vue"),
+      props: true
     },
     {
       path: '/new-items',
