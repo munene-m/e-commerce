@@ -11,6 +11,7 @@ export const useProductStore = defineStore('product', () => {
         formData.append('description', description);
         formData.append('quantity', quantity);
         formData.append('price', price);
+        formData.append('category', category)
         formData.append('image', image);
 
         const config = {
