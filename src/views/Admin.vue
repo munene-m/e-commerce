@@ -13,6 +13,7 @@ const formData = reactive({
     description: "",
     quantity: "",
     price: "",
+    selectedCategory,
     image: null
 })
 
@@ -21,21 +22,22 @@ const rules = computed(() => {
         name: { required: helpers.withMessage("Product name is required", required) },
         description: { required: helpers.withMessage("Product description is required", required) },
         quantity: { required: helpers.withMessage("Product quantity is required", required)},
-        price: { required: helpers.withMessage("Price is required", required)}
+        price: { required: helpers.withMessage("Price is required", required)},
+        selectedCategory: {required: helpers.withMessage("Please select a category", required),}
     }
 })
 const v$ = useVuelidate(rules, formData)
 const handleSubmit = async () => {
     const result = await v$.value.$validate()
     if(result) {
-        console.log()
-        productStore.addProduct(formData.name, formData.description, formData.quantity, formData.price, formData.image)
+        productStore.addProduct(formData.name, formData.description, formData.quantity, formData.price, formData.selectedCategory, formData.image)
     }
     setTimeout(() => {
         formData.name = "",
         formData.description = "",
         formData.quantity  = "",
         formData.price = "",
+        formData.selectedCategory = "",
         formData.image = null
     }, 1000)
 }
@@ -52,6 +54,20 @@ const handleSubmit = async () => {
                     <br>
                     <label class="mt-3" for="name">Product description</label>
                     <textarea v-model="formData.description" type="text" class="text-sm outline-transparent w-full  h-24 border py-1 px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded"></textarea>
+                    <label for="category">Select a relevant category so freelancers can find your job</label><br />
+            <div class="select">
+              <select name="category" v-model="formData.selectedCategory" id="category">
+                <option value="" disabled>Select one</option>
+                <option value="Clothes">Clothes</option>
+                <option value="Sneakers">Sneakers</option>
+                <option value="Tech">Tech</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Kitchenware">Kitchenware</option>
+              </select>
+            </div>
+            <p class="errorMsg" v-if="v$.selectedCategory.$error">
+              {{ v$.selectedCategory.$errors[0].$message }}
+            </p>
                     <label class="mt-3 mb-1 block" for="name">Product image</label>
                     <input type="file"  name="image" @change="onFileSelected">
                 </div>
@@ -60,6 +76,7 @@ const handleSubmit = async () => {
                     <label class="block" for="name">Quantity</label>
                     <input placeholder="e.g 200" type="text" v-model="formData.quantity" class="text-sm outline-transparent w-full  h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
                     <br>
+                    
                     <label class="mt-3" for="name">Price</label>
                     <input placeholder="e.g KES 650" type="text" v-model="formData.price" class="text-sm outline-transparent w-full h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
                 </div>
