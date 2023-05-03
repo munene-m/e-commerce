@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { useCartStore } from '../stores/cart'
 import { useAuthStore } from '../stores/auth'
+import axios from 'axios';
 
 const cartStore = useCartStore()
 const authStore = useAuthStore()
@@ -112,6 +113,13 @@ const filteredBooks = computed(() => {
 const booksFound = computed(() => {
   return filteredBooks.value.length > 0
 })
+async function removeItem (id) {
+  await axios.delete(`http://localhost:5500/products/delete/${id}`, {
+      headers: { Authorization: `Bearer ${authStore.user}` }
+    })
+  .then(response => console.log(response.data))
+  .catch(err => console.log(err))
+}
 </script>
 
 <template>
@@ -130,7 +138,7 @@ const booksFound = computed(() => {
         <button class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500">
           Edit
         </button>
-        <button class="bg-red-500 text-white rounded-3xl border-2 border-red-500 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500 mx-1">
+        <button @click="removeItem(book.id)" class="bg-red-500 text-white rounded-3xl border-2 border-red-500 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500 mx-1">
           Remove
         </button>
       </div>
