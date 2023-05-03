@@ -1,10 +1,14 @@
 <script setup>
 import { onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cart'
 import DeleteIcon from '../components/icons/DeleteIcon.vue'
 import PlusIcon from '../components/icons/PlusIcon.vue'
 import MinusIcon from '../components/icons/MinusIcon.vue'
+import ArrowIcon from '../components/icons/ArrowIcon.vue'
+
 const cartStore = useCartStore()
+const router = useRouter()
 
 let cartItems = computed(() => cartStore.cart.cartItems)
 
@@ -31,6 +35,9 @@ onMounted(() => {
 const isCart = computed(() => {
   return cartItems.value.length > 0
 })
+const redirectToCheckout = () => {
+  router.push("/checkout")
+}
 </script>
 
 <template>
@@ -57,7 +64,7 @@ const isCart = computed(() => {
         </button>
       </div>
     </div>
-    <button  class="bg-emerald-800 m-auto text-white rounded-lg border-2 border-emerald-800  px-3 py-2 mt-9 text-xs cursor-pointer hover:scale-95 transition duration-500 flex items-center">Proceed to checkout</button>
+    <button @click="redirectToCheckout()" class="bg-emerald-800 m-auto text-white rounded-lg border-2 border-emerald-800  px-3 py-2 mt-9 text-sm cursor-pointer hover:scale-95 transition duration-500 flex items-center justify-center">Proceed to checkout <ArrowIcon/></button>
 
   </main>
   <div v-else>
