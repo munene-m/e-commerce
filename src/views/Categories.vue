@@ -11,11 +11,8 @@ const products = ref([])
 
 onMounted(() => {
     categories.forEach((category) => {
-  axios
-    .get(`http://localhost:5500/products/product/${category}`, {
-      headers: {
-        Authorization: `Bearer ${authStore.user}`
-      }
+  axios.get(`http://localhost:5500/products/product/${category}`, {
+      headers: { Authorization: `Bearer ${authStore.user}` }
     })
     .then((response) => {
       products.value.push(response.data)

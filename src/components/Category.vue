@@ -18,11 +18,8 @@ const props = defineProps({
 })
 const products = ref([])
 async function getProducts() {
-  axios
-    .get(`http://localhost:5500/products/product/${props.category}`, {
-      headers: {
-        Authorization: `Bearer ${authStore.user}`
-      }
+  axios.get(`http://localhost:5500/products/product/${props.category}`, {
+      headers: { Authorization: `Bearer ${authStore.user}` }
     })
     .then((response) => {
       console.log(response.data)
@@ -75,5 +72,5 @@ onMounted(() => {
       </div>
     </div>
   </main>
-  <div class="relative mt-20 text-center h-screen" v-else>There are no items in this category</div>
+  <div class="relative mt-20 text-center flex items-center justify-center text-xl h-screen" v-else>There are no items in this category</div>
 </template>
