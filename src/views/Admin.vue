@@ -13,7 +13,7 @@ const formData = reactive({
     description: "",
     quantity: "",
     price: "",
-    selectedCategory,
+    selectedCategory:"",
     image: null
 })
 
@@ -54,9 +54,16 @@ const handleSubmit = async () => {
                     <br>
                     <label class="mt-3" for="name">Product description</label>
                     <textarea v-model="formData.description" type="text" class="text-sm outline-transparent w-full  h-24 border py-1 px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded"></textarea>
-                    <label for="category">Select a relevant category so freelancers can find your job</label><br />
-            <div class="select">
-              <select name="category" v-model="formData.selectedCategory" id="category">
+                    <label class="block" for="name">Quantity</label>
+                    <input placeholder="e.g 200" type="text" v-model="formData.quantity" class="text-sm outline-transparent w-full  h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
+                    <br>
+                    
+                    <label class="mt-3" for="name">Price</label>
+                    <input placeholder="e.g KES 650" type="text" v-model="formData.price" class="text-sm outline-transparent w-full h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
+
+                    <label for="category">Select product category</label><br />
+            <div class="w-2/5 px-2 py-1 text-base cursor-pointer mt-3">
+              <select name="category"  v-model="formData.selectedCategory" class="border border-slate-500 rounded outline-none w-full p-1 cursor-pointer ">
                 <option value="" disabled>Select one</option>
                 <option value="Clothes">Clothes</option>
                 <option value="Sneakers">Sneakers</option>
@@ -71,16 +78,7 @@ const handleSubmit = async () => {
                     <label class="mt-3 mb-1 block" for="name">Product image</label>
                     <input type="file"  name="image" @change="onFileSelected">
                 </div>
-                <h2 class="font-bold mt-4 text-xl">Inventory</h2>
-                <div class="p-4 border border-slate-300 rounded-2xl">
-                    <label class="block" for="name">Quantity</label>
-                    <input placeholder="e.g 200" type="text" v-model="formData.quantity" class="text-sm outline-transparent w-full  h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
-                    <br>
-                    
-                    <label class="mt-3" for="name">Price</label>
-                    <input placeholder="e.g KES 650" type="text" v-model="formData.price" class="text-sm outline-transparent w-full h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
-                </div>
-                <button type="submit" class="w-40  bg-emerald-800 text-white rounded-xl px-2 py-2 mt-2">Add product</button>
+                <button type="submit" class="w-40  bg-emerald-800 text-white rounded-xl px-2 py-2 mt-4">Add product</button>
             </form>
         </div>
     </main>
