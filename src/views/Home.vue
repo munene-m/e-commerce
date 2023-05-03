@@ -77,14 +77,14 @@ const categories = [
   <div class="flex w-5/6 md:w-96 m-auto my-8 md:items-center justify-center md:px-4">
     <input
       v-model="searchItem"
-      class="font-open-sans w-96 h-8 px-6 md:w-inherit lg:w-72 outline-transparent text-gray-900 bg-slate-300 rounded-l-lg text-sm"
+      class="font-open-sans w-96 h-10 px-6 md:w-inherit lg:w-72 outline-transparent text-gray-900 bg-slate-300 rounded-l-lg text-sm"
       type="search"
       name="search"
       placeholder="Search items"
       autocomplete="off"
     />
     <SearchIcon
-      class="relative bg-emerald-800 text-white border border-slate-700 right-0 left-0 w-7 rounded-r-lg py-1 h-8"
+      class="relative bg-emerald-800 text-white border border-slate-700 right-0 left-0 w-7  rounded-r-lg py-1 h-10"
     />
   </div>
   <Books :search-item="searchItem" />
