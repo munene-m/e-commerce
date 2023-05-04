@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import Books from '../components/Items.vue'
 import SearchIcon from '../components/icons/SearchIcon.vue'
 import CategoryItem from '../components/CategoryItem.vue'
@@ -9,7 +10,11 @@ import tech from '../assets/tech.jpg'
 import furniture from '../assets/furniture.jpg'
 import kitchenware from '../assets/kitchenware.jpg'
 
+const router = useRouter()
 const searchItem = ref('')
+const handleClick = () => {
+  router.push({path: "/categories"})
+}
 const categories = [
   {
     id: 1,
@@ -49,7 +54,7 @@ const categories = [
       <p class="text-emerald-800 text-xl md:text-2xl font-bold md:w-3/4 mt-7">
         Shopping is a bit of a relaxing hobby for me, which is sometimes troubling for the bank balance.
       </p>
-      <button class="text-white rounded-xl px-4 py-2 md:px-4 md:py-2 md:text-base flex items-center mt-3 md:mt-8 bg-emerald-800 outline-transparent">
+      <button @click="handleClick()" class="text-white rounded-xl px-4 py-2 md:px-4 md:py-2 md:text-base flex items-center mt-3 md:mt-8 bg-emerald-800 outline-transparent">
         Explore now
       </button>
     </div>
