@@ -1,14 +1,9 @@
 # e-commerce
 
-This template should help get you started developing with Vue 3 in Vite.
+--Still work in progress--
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+This project is built using Vue.js and Tailwind CSS and is an e-commerce website where users can shop for various items in various categories. The admin/shop owner can add items to the website and make changes to items in the inventory. 
+This repository represents the client-side of the application and it is connected to a Node.js server that stores data in a MongoDB database.
 
 ## Project Setup
 
@@ -48,10 +43,4 @@ But it's still recommended to test the production build with `test:e2e` before d
 ```sh
 npm run build
 npm run test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
 ```
