@@ -23,33 +23,35 @@ async function getCartItems() {
     }
   }).then(response => {
     cartItems.value.push(response.data)
+    console.log(response.data);
   }).catch(err => console.log(err))
 }
-
-onMounted(() => {
-  getCartItems()
-})
 
 function removeItem(id) {
   cartStore.removeFromCart(id)
 }
 
-function increase(id) {
-  const item = cartStore.cart.cartItems.find((item) => item._id === id)
-  if (item) {
-    cartStore.incrementQuantity(id)
-  }
+async function increase(id, quantity) {
+    const item = cartItems.value.flatMap(items => items).find(item => item._id === id)
+    quantity ++
+    await axios.put(`http://localhost:5500/cart/update/${id}`, {quantity}, {
+      headers: { Authorization: `Bearer ${authStore.user}`}
+    }).then((response) => {
+      item.quantity = response.data.quantity
+    })
+    .catch(err => console.log(err))
 }
-function decrease(id) {
-  const item = cartStore.cart.cartItems.find((item) => item._id === id)
-  if (item) {
-    cartStore.decrementQuantity(id)
-  }
+async function decrease(id, quantity) {
+    const item = cartItems.value.flatMap(items => items).find(item => item._id === id)
+    quantity--
+    await axios.put(`http://localhost:5500/cart/update/${id}`, {quantity}, {
+      headers: { Authorization: `Bearer ${authStore.user}`}
+    }).then((response) => {
+      item.quantity = response.data.quantity
+    })
+    .catch(err => console.log(err))
 }
-onMounted(() => {
-  console.log(cartItems.value)
-  cartItems
-})
+
 
 const isCart = computed(() => {
   return cartItems.value.length > 0
@@ -57,6 +59,12 @@ const isCart = computed(() => {
 const redirectToCheckout = () => {
   router.push("/checkout")
 }
+onMounted(() => {
+  getCartItems()
+  console.log(cartItems.value)
+  cartItems
+  cartStore.cart.cartItems.length
+})
 </script>
 
 <template>
@@ -71,9 +79,9 @@ const redirectToCheckout = () => {
         <p>Price: {{ item.price }}</p>
         <p class="flex items-center">
           Quantity:
-          <MinusIcon @click="decrease(item._id)" class="cursor-pointer mx-1 bg-slate-400 rounded-full" />
+          <MinusIcon @click="decrease(item._id, item.quantity)" class="cursor-pointer mx-1 bg-slate-400 rounded-full" />
           {{ item.quantity }}
-          <PlusIcon @click="increase(item._id)" class="cursor-pointer mx-1 bg-slate-400 rounded-full" />
+          <PlusIcon @click="increase(item._id, item.quantity)" class="cursor-pointer mx-1 bg-slate-400 rounded-full" />
         </p>
         <button
           @click="removeItem(item._id)"
