@@ -26,8 +26,10 @@ export const useProductStore = defineStore('product', () => {
             console.log(response.data)
         }).catch((err) => console.log(err))
     }
+
     return { addProduct }
 })
+
 
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useProductStore, import.meta.hot));

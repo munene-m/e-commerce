@@ -2,8 +2,9 @@
 import MenuIcon from '../components/icons/MenuIcon.vue'
 import CartIcon from './icons/CartIcon.vue';
 import PersonIcon from './icons/PersonIcon.vue';
+import axios from 'axios';
 import { useCartStore } from '../stores/cart';
-import { ref } from 'vue';
+import { onMounted, ref, watchEffect } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 
@@ -21,6 +22,22 @@ const logOut = () => {
   function toggleNav() {
   return (showMenu.value = !showMenu.value);
   }
+  const cartItems = ref([])
+
+async function getCartItems() {
+  await axios.get("http://localhost:5500/cart", {
+    headers: {
+      Authorization: `Bearer ${authStore.user}`
+    }
+  }).then(response => {
+    cartItems.value.push(response.data)
+    console.log(response.data);
+  }).catch(err => console.log(err))
+}
+onMounted(() => {
+  getCartItems()
+  cartItems
+})
 </script>
 
 <template>
@@ -39,11 +56,13 @@ const logOut = () => {
         <ul :class="showMenu ? 'flex' : 'hidden'" class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0">
 
           <li><RouterLink class="text-emerald-800 font-open-sans" to="/categories">Categories</RouterLink></li>
-          <li><RouterLink class="text-emerald-800 font-open-sans" to="/new-items">What's new</RouterLink></li>
           <li><RouterLink v-if="!authStore.user" class="text-emerald-800 flex items-center font-open-sans" to="/account"><PersonIcon/>Account</RouterLink></li>
           <li v-if="authStore.user" class="m-0"><button @click="logOut()" class="px-3 py-1 bg-emerald-800 text-white rounded-2xl">Log out</button></li>
           <li v-if="authStore.admin"><RouterLink class="text-emerald-800 font-open-sans" to="/admin">Admin page</RouterLink></li>
-          <li><RouterLink class="text-emerald-800 flex items-center font-open-sans" to="/cart"><CartIcon/><span class="pl-1 bg-emerald-800 text-white rounded-full w-4 h-4 fixed top-4 right-2 text-xs ">{{ cartStore.cart.cartItems.length }}</span></RouterLink></li>
+          <li v-for="(item, index) in cartItems" :index="index">
+            <li><RouterLink class="text-emerald-800 flex items-center font-open-sans" to="/cart"><CartIcon/><span class="pl-1 bg-emerald-800 text-white rounded-full w-4 h-4 fixed top-4 right-2 text-xs ">{{ item.length }}</span></RouterLink></li>
+          
+          </li>
         </ul>
       </nav>
 </template>
