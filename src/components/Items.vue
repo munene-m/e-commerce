@@ -10,18 +10,6 @@ const authStore = useAuthStore()
 function addToCart(id, name, quantity, image, price) {
 
   cartStore.addToCart(id,name,image, price,quantity )
-
-  // await axios.get(`http://localhost/products/product/${id}`)
-  // .then(response => {
-  //   console.log(response.data)
-  //   productData.productId = response.data._id
-  //   productData.name = response.data.name
-  //   productData.price = response.data.price
-  //   productData.image = response.data.image
-  //   productData.quantity = response.data.quantity
-
-  // })
-  // .catch(err => console.log(err))
 }
 
 const items = ref([])
@@ -61,12 +49,14 @@ const productsFound = computed(() => {
   return filteredProducts.value.length > 0
 })
 async function removeItem (id) {
-  cartStore.removeFromCart(id)
-  // await axios.delete(`http://localhost:5500/products/delete/${id}`, {
-  //     headers: { Authorization: `Bearer ${authStore.user}` }
-  //   })
-  // .then(response => console.log(response.data))
-  // .catch(err => console.log(err))
+  await axios.delete(`http://localhost:5500/products/delete/${id}`, {
+      headers: { Authorization: `Bearer ${authStore.user}` }
+    })
+  .then(response => console.log(response.data))
+  .catch(err => console.log(err))
+}
+async function editItem(id) {
+  
 }
 </script>
 
@@ -83,7 +73,7 @@ async function removeItem (id) {
         Add to cart
       </button>
       <div v-else>
-        <button class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500">
+        <button @click="editItem(product._id)" class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500">
           Edit
         </button>
         <button @click="removeItem(product._id)" class="bg-red-500 text-white rounded-3xl border-2 border-red-500 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500 mx-1">
