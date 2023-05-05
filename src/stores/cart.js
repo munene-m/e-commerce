@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 // import { useAuthStore } from './auth'
 import axios from 'axios'
 
@@ -13,9 +13,22 @@ export const useCartStore = defineStore('cart', () => {
     cartItems: []
   })
 
+  
+
   // Load cart items from local storage on initialization
   if (localStorage.getItem(STORAGE_KEY)) {
     cart.cartItems = JSON.parse(localStorage.getItem(STORAGE_KEY))
+  }
+
+  async function getCartItems() {
+    await axios.get("http://localhost:5500/cart", {
+      headers: {
+        Authorization: `Bearer ${user}`
+      }
+    }).then(response => {
+      cart.cartItems.push(response.data)
+      console.log(response.data);
+    }).catch(err => console.log(err))
   }
 
   const addToCart = async (productId, name, image, price, quantity) => {
@@ -50,22 +63,37 @@ export const useCartStore = defineStore('cart', () => {
     // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
   }
 
-  const incrementQuantity = (id) => {
+  const increaseQuantity = async (id, quantity) => {
     const item = cart.cartItems.find((item) => item._id === id)
+    console.log(item);
     if (item) {
-      item.quantity++
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
+      item.quantity+=quantity
+      // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
+      await axios.put(`http://localhost:5500/cart/update/${id}`, {quantity: item.quantity++}, {
+        headers: { Authorization: `Bearer ${user}` }
+      }).then(response => {
+        console.log(response.data);
+        // cart.cartItems = cart.cartItems.filter((item) => item._id !== id)
+        // cart.cartItems.push(response.data)
+      }).catch(err => console.log(err))
     }
   }
-  const decrementQuantity = (id) => {
+  const decreaseQuantity = async (id, quantity) => {
     const item = cart.cartItems.find((item) => item._id === id)
-    if (item.quantity > 1) {
-      item.quantity--
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
+    if (item) {
+      item.quantity-=quantity
+      // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
+      await axios.put(`http://localhost:5500/cart/update/${id}`, {quantity:item.quantity}, {
+        headers: { Authorization: `Bearer ${user}` }
+      }).then(response => {
+        console.log(response.data);
+        // cart.cartItems = cart.cartItems.filter((item) => item._id !== id)
+        // cart.cartItems.push(response.data)
+      }).catch(err => console.log(err))
     }
   }
 
-  return { cart, addToCart, removeFromCart, incrementQuantity, decrementQuantity }
+  return { cart, addToCart, getCartItems, removeFromCart, increaseQuantity, decreaseQuantity }
 })
 
 if (import.meta.hot) {
