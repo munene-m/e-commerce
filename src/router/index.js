@@ -32,11 +32,6 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/new-items',
-      name: 'new-items',
-      component: () => import('../views/NewItems.vue')
-    },
-    {
       path: '/cart',
       name: 'cart',
       component: () => import('../views/Cart.vue'),
