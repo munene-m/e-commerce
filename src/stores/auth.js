@@ -5,7 +5,8 @@ export const useAuthStore = defineStore({
   id: "auth",
   state: () => ({
     user: JSON.parse(localStorage.getItem("token")),
-    admin: JSON.parse(localStorage.getItem("adminEmail"))
+    admin: JSON.parse(localStorage.getItem("adminEmail")),
+    username: JSON.parse(localStorage.getItem("username"))
   }),
   getters: {},
 
@@ -28,6 +29,7 @@ export const useAuthStore = defineStore({
       })
       this.user = response.data.token
       localStorage.setItem("token", JSON.stringify(response.data.token));
+      localStorage.setItem("username", JSON.stringify(response.data.username))
       if(response.data.email === "admin@email.com"){
         this.admin = response.data.email
         localStorage.setItem("adminEmail", JSON.stringify(response.data.email))
