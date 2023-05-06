@@ -18,7 +18,7 @@ const props = defineProps({
 })
 const products = ref([])
 async function getProducts() {
-  axios.get(`http://localhost:5500/products/product/${props.category}`, {
+  axios.get(`http://localhost:5500/products/item/${props.category}`, {
       headers: { Authorization: `Bearer ${authStore.user}` }
     })
     .then((response) => {
