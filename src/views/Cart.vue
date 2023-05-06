@@ -17,7 +17,7 @@ const router = useRouter()
 const cartItems = ref([])
 
 async function getCartItems() {
-  await axios.get("http://localhost:5500/cart", {
+  await axios.get(`http://localhost:5500/cart/${authStore.username}`, {
     headers: {
       Authorization: `Bearer ${authStore.user}`
     }
@@ -56,7 +56,7 @@ async function decrease(id, quantity) {
 const isCart = computed(() => {
   return cartItems.value.length > 0
 })
-const redirectToCheckout = () => {
+const redirectToCheckout = (id) => {
   router.push("/checkout")
 }
 onMounted(() => {
@@ -83,16 +83,13 @@ onMounted(() => {
           {{ item.quantity }}
           <PlusIcon @click="increase(item._id, item.quantity)" class="cursor-pointer mx-1 bg-slate-400 rounded-full" />
         </p>
-        <button
-          @click="removeItem(item._id)"
-          class="bg-red-600 text-white rounded-lg border-2 border-red-600 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500 flex items-center"
-        >
+        <button @click="removeItem(item._id)" class="bg-red-600 text-white rounded-lg border-2 border-red-600 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500 flex items-center">
           Remove <DeleteIcon />
         </button>
       </div>
     </div>
 </div>
-    <button @click="redirectToCheckout()" class="bg-emerald-800 m-auto text-white rounded-lg border-2 border-emerald-800  px-3 py-2 mt-9 text-sm cursor-pointer hover:scale-95 transition duration-500 flex items-center justify-center">Proceed to checkout <ArrowIcon/></button>
+    <button @click="redirectToCheckout(item._id)" class="bg-emerald-800 m-auto text-white rounded-lg border-2 border-emerald-800  px-3 py-2 mt-9 text-sm cursor-pointer hover:scale-95 transition duration-500 flex items-center justify-center">Proceed to checkout <ArrowIcon/></button>
 
   </main>
   <div v-else>

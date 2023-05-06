@@ -31,9 +31,9 @@ export const useCartStore = defineStore('cart', () => {
     }).catch(err => console.log(err))
   }
 
-  const addToCart = async (productId, name, image, price, quantity) => {
+  const addToCart = async (customer, productId, name, image, price, quantity) => {
     // Check if item already exists in cartItems array
-    await axios.post("http://localhost:5500/cart/add", { productId, name, image, price, quantity },
+    await axios.post("http://localhost:5500/cart/add", {customer, productId, name, image, price, quantity },
         { headers: { Authorization: `Bearer ${user}` }}
       ).then((response) => {
         console.log(response.data)
