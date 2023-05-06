@@ -12,6 +12,7 @@ const formData = reactive({
     name:"",
     description: "",
     quantity: "",
+    itemsInStock: "",
     price: "",
     selectedCategory:"",
     image: null
@@ -22,6 +23,7 @@ const rules = computed(() => {
         name: { required: helpers.withMessage("Product name is required", required) },
         description: { required: helpers.withMessage("Product description is required", required) },
         quantity: { required: helpers.withMessage("Product quantity is required", required)},
+        itemsInStock: { required: helpers.withMessage("Product quantity is required", required)},
         price: { required: helpers.withMessage("Price is required", required)},
         selectedCategory: {required: helpers.withMessage("Please select a category", required),}
     }
@@ -30,12 +32,14 @@ const v$ = useVuelidate(rules, formData)
 const handleSubmit = async () => {
     const result = await v$.value.$validate()
     if(result) {
-        productStore.addProduct(formData.name, formData.description, formData.quantity, formData.price, formData.selectedCategory, formData.image)
+        productStore.addProduct(formData.name, formData.description, formData.quantity, formData.itemsInStock, formData.price, formData.selectedCategory, formData.image)
+        showModal.value = false
     }
     setTimeout(() => {
         formData.name = "",
         formData.description = "",
         formData.quantity  = "",
+        formData.itemsInStock = ""
         formData.price = "",
         formData.selectedCategory = "",
         formData.image = null
@@ -57,7 +61,9 @@ const handleSubmit = async () => {
                     <label class="block" for="name">Quantity</label>
                     <input placeholder="e.g 200" type="text" v-model="formData.quantity" class="text-sm outline-transparent w-full  h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
                     <br>
-                    
+                    <label class="block" for="name">Quantity</label>
+                    <input placeholder="e.g 200" type="text" v-model="formData.itemsInStock" class="text-sm outline-transparent w-full  h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
+                    <br>
                     <label class="mt-3" for="name">Price</label>
                     <input placeholder="e.g KES 650" type="text" v-model="formData.price" class="text-sm outline-transparent w-full h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
 
