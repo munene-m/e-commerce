@@ -6,6 +6,10 @@ import TagIcon from '../components/icons/TagIcon.vue'
 const authStore = useAuthStore()
 const categories = ['Clothes', 'Tech', 'Kitchenware', 'Furniture', 'Sneakers']
 
+function addToCart(customer, id, name, quantity, image, price) {
+  cartStore.addToCart(customer, id, name, image, price, quantity)
+}
+
 const products = ref([])
 
 
@@ -42,7 +46,7 @@ onMounted(() => {
         <p class="text-xs sm:text-sm">{{ product.price }}</p>
         <button
           v-if="!authStore.admin"
-          @click="addToCart(product)"
+          @click="addToCart(authStore.username, product._id, product.name, product.quantity, product.image, product.price)"
           class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
         >
           Add to cart
