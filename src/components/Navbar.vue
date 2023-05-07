@@ -25,7 +25,7 @@ const logOut = () => {
   const cartItems = ref([])
 
 async function getCartItems() {
-  await axios.get("http://localhost:5500/cart", {
+  await axios.get(`http://localhost:5500/cart/${authStore.username}`, {
     headers: {
       Authorization: `Bearer ${authStore.user}`
     }
@@ -44,7 +44,7 @@ onMounted(() => {
         <nav class="px-5 py-5 fixed top-0 left-0 right-0 z-10 md:flex md:justify-between md:items-center bg-slate-200 bg-opacity-40 firefox:bg-opacity-90 dark:text-gray-200 backdrop-filter backdrop-blur-lg">
         <div class="flex items-center justify-between">
           <RouterLink to="/" class="text-xl flex items-center justify-center gap-1 font-bold text-emerald-800 md:text-2xl font-open-sans">
-            E-commerce
+            M-duka
           </RouterLink>
           <!--Mobilemenu button-->
           <div @click="toggleNav" class="flex md:hidden">
