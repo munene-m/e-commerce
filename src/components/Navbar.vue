@@ -70,7 +70,7 @@ onMounted(() => {
           <li v-if="authStore.user" class="m-0"><button @click="logOut()" class="px-3 py-1 bg-emerald-800 text-white rounded-2xl">Log out</button></li>
           <li v-if="authStore.admin"><RouterLink class="text-emerald-800 font-open-sans" to="/admin">Admin page</RouterLink></li>
           <!-- <li v-for="(item, index) in cartItems" :index="index"> -->
-          <li><RouterLink class="text-emerald-800 flex items-center font-open-sans" to="/cart"><CartIcon/><span class="pl-1 bg-emerald-800 text-white rounded-full w-4 h-4 fixed top-4 right-2 text-xs ">{{ cartItemsLength }}</span></RouterLink></li>
+          <li><RouterLink class="text-emerald-800 flex items-center font-open-sans" to="/cart"><CartIcon/><span class="pl-1 bg-emerald-800 text-white rounded-full w-4 h-4 fixed top-4 right-2 text-xs ">{{ cartItems.length }}</span></RouterLink></li>
           
           <!-- </li> -->
         </ul>
