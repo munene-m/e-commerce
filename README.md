@@ -2,7 +2,7 @@
 
 --Still work in progress--
 
-This project is built using Vue.js and Tailwind CSS and is an e-commerce website where users can shop for various items in various categories. The admin/shop owner can add items to the website and make changes to items in the inventory. 
+This project is built using Vue.js and Tailwind CSS and is an e-commerce website where users can shop for various items in various categories. The admin/shop owner can add items to the website and make changes to items in the inventory as well as delete items. 
 This repository represents the client-side of the application and it is connected to a Node.js server that stores data in a MongoDB database.
 
 ## Project Setup
