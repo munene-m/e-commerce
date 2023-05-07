@@ -89,7 +89,7 @@ onMounted(() => {
       </div>
     </div>
 </div>
-    <button @click="redirectToCheckout(item._id)" class="bg-emerald-800 m-auto text-white rounded-lg border-2 border-emerald-800  px-3 py-2 mt-9 text-sm cursor-pointer hover:scale-95 transition duration-500 flex items-center justify-center">Proceed to checkout <ArrowIcon/></button>
+    <button v-if="!isCart" @click="redirectToCheckout(item._id)" class="bg-emerald-800 m-auto text-white rounded-lg border-2 border-emerald-800  px-3 py-2 mt-9 text-sm cursor-pointer hover:scale-95 transition duration-500 flex items-center justify-center">Proceed to checkout <ArrowIcon/></button>
 
   </main>
   <div v-else>

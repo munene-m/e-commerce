@@ -6,14 +6,18 @@ import { useCartStore } from '../stores/cart'
 import { useAuthStore } from '../stores/auth'
 import { useProductStore } from '../stores/products'
 import Modal from './Modal.vue'
+import Popup from './Popup.vue'
 import axios from 'axios'
 
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 const productStore = useProductStore()
 
-function addToCart(id, name, quantity, image, price) {
-  cartStore.addToCart(id, name, image, price, quantity)
+const showPopUp = ref(false);
+
+
+function addToCart(customer, id, name, quantity, image, price) {
+  cartStore.addToCart(customer, id, name, image, price, quantity)
 }
 
 const items = ref([])
@@ -63,8 +67,8 @@ async function removeItem(id) {
     .catch((err) => console.log(err))
 }
 
-async function editItem(id) {}
 let showModal = ref(false)
+
 function productForm() {
   showModal.value = true
 }
@@ -92,42 +96,26 @@ const rules = computed(() => {
   }
 })
 const v$ = useVuelidate(rules, formData)
-const handleSubmit = async () => {
+
+const handleModal = () => {
+  showModal.value = false
+}
+async function handleModalSubmit(id) {
   const result = await v$.value.$validate()
-  if (result) {
-    productStore.addProduct(
-      formData.name,
-      formData.description,
-      formData.quantity,
-      formData.itemsInStock,
-      formData.price,
-      formData.selectedCategory,
-      formData.image
-    )
-  }
-  setTimeout(() => {
-    ;(formData.name = ''),
-      (formData.description = ''),
-      (formData.quantity = ''),
-      (formData.itemsInStock = '')
-    ;(formData.price = ''), (formData.selectedCategory = ''), (formData.image = null)
-  }, 1000)
-}
-const handleModal = async () => {
-  showModal.value = false
-}
-function handleModalSubmit(id) {
-  productStore.editProduct(
-    id,
-    formData.name,
-    formData.description,
-    formData.quantity,
-    formData.itemsInStock,
-    formData.selectedCategory,
-    formData.price,
-    formData.image
+  if(result){
+  await productStore.editProduct(
+    id, formData.name, formData.description, formData.quantity, formData.itemsInStock, formData.selectedCategory, formData.price, formData.image
   )
+  showPopUp.value = true;
+
+}
   showModal.value = false
+  setTimeout(() => {
+    formData.name = "", formData.description = "",
+    formData.quantity = "", formData.itemsInStock = "",
+    formData.selectedCategory = "", formData.price = "",
+    formData.image = ""
+  } ,1000)
 }
 </script>
 
@@ -135,12 +123,7 @@ function handleModalSubmit(id) {
   <div
     v-if="productsFound"
     class="flex overflow-auto pb-4 whitespace-nowrap items-end sm:grid sm:gap-5 sm:grid-cols-2 md:grid-cols-4 sm:place-items-center font-open-sans"
-    style="
-      ::-webkit-scrollbar {
-        display: none;
-      }
-    "
-  >
+    style="::-webkit-scrollbar {display: none;}">
     <div
       v-for="product in filteredProducts"
       :key="product._id"
@@ -148,7 +131,7 @@ function handleModalSubmit(id) {
     >
       <img class="w-full h-full rounded object-cover" :src="product.image" :alt="product.name" />
       <p
-        v-if="product.itemsInStock < 1"
+        v-show="product.itemsInStock < 1"
         class="border border-slate-400 pr-2 mb-1 text-xs rounded-xl bg-slate-50 text-red-500 flex flex-row items-center"
       >
         Out of stock!
@@ -157,9 +140,9 @@ function handleModalSubmit(id) {
       <p class="text-sm">{{ product.description }}</p>
       <p class="text-xs sm:text-sm">Price: {{ product.price }}</p>
       <button
-        v-if="!authStore.admin && product.itemsInStock > 0"
+        v-if="!authStore.admin "
         @click="
-          addToCart(product._id, product.name, product.quantity, product.image, product.price)
+          addToCart(authStore.username, product._id, product.name, product.quantity, product.image, product.price)
         "
         class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
       >
@@ -178,6 +161,8 @@ function handleModalSubmit(id) {
               <form @submit.prevent="handleModalSubmit(product._id)" enctype="multipart/form-data"
                 class="w-full z-10 flex flex-col items-center mt-4">
                   <h1 class="font-bold text-xl text-emerald-800">Edit product details</h1>
+    <Popup v-if="showPopUp" message="Product updated successfully!" />
+
 
                 <div class="py-4  md:grid md:grid-cols-2 md:place-items-start">
                   <div>

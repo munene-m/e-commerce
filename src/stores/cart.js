@@ -8,6 +8,7 @@ import axios from 'axios'
 export const useCartStore = defineStore('cart', () => {
   const STORAGE_KEY = 'cartItems'
   const user = JSON.parse(localStorage.getItem("token"))
+  const username = JSON.parse(localStorage.getItem("username"))
 
   const cart = reactive({
     cartItems: []
@@ -21,7 +22,7 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   async function getCartItems() {
-    await axios.get("http://localhost:5500/cart", {
+    await axios.get(`http://localhost:5500/cart/${username}`, {
       headers: {
         Authorization: `Bearer ${user}`
       }
