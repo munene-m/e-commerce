@@ -34,7 +34,7 @@ const handleSubmit = async () =>{
     setTimeout(() => {
         formData.email = "",
         formData.password  = ""
-    }, 1000)
+    }, 900)
 }
 </script>
 <template>
