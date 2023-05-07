@@ -24,7 +24,7 @@ const items = ref([])
 
 async function getProducts() {
   await axios
-    .get('http://localhost:5500/products', {
+    .get('https://m-duka.onrender.com/products', {
       headers: {
         Authorization: `Bearer ${authStore.user}`
       }
@@ -60,7 +60,7 @@ const productsFound = computed(() => {
 })
 async function removeItem(id) {
   await axios
-    .delete(`http://localhost:5500/products/delete/${id}`, {
+    .delete(`https://m-duka.onrender.com/products/delete/${id}`, {
       headers: { Authorization: `Bearer ${authStore.user}` }
     })
     .then((response) => console.log(response.data))

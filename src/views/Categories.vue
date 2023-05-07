@@ -11,7 +11,7 @@ const products = ref([])
 
 onMounted(() => {
     categories.forEach((category) => {
-  axios.get(`http://localhost:5500/products/item/${category}`, {
+  axios.get(`https://m-duka.onrender.com/products/item/${category}`, {
       headers: { Authorization: `Bearer ${authStore.user}` }
     })
     .then((response) => {

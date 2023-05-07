@@ -12,7 +12,7 @@ export const useAuthStore = defineStore({
 
   actions: {
     async signup(username, email, password) {
-      const response = await axios.post('http://localhost:5500/auth/register', {
+      const response = await axios.post('https://m-duka.onrender.com/auth/register', {
         username,
         email,
         password
@@ -24,7 +24,7 @@ export const useAuthStore = defineStore({
       }
     },
     async login(email, password) {
-      const response = await axios.post('http://localhost:5500/auth/login', {
+      const response = await axios.post('https://m-duka.onrender.com/auth/login', {
         email, password
       })
       this.user = response.data.token

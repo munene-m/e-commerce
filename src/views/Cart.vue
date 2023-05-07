@@ -34,7 +34,7 @@ function removeItem(id) {
 async function increase(id, quantity) {
     const item = cartItems.value.flatMap(items => items).find(item => item._id === id)
     quantity ++
-    await axios.put(`http://localhost:5500/cart/update/${id}`, {quantity}, {
+    await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity}, {
       headers: { Authorization: `Bearer ${authStore.user}`}
     }).then((response) => {
       item.quantity = response.data.quantity
@@ -44,7 +44,7 @@ async function increase(id, quantity) {
 async function decrease(id, quantity) {
     const item = cartItems.value.flatMap(items => items).find(item => item._id === id)
     quantity--
-    await axios.put(`http://localhost:5500/cart/update/${id}`, {quantity}, {
+    await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity}, {
       headers: { Authorization: `Bearer ${authStore.user}`}
     }).then((response) => {
       item.quantity = response.data.quantity

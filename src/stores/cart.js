@@ -22,7 +22,7 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   async function getCartItems() {
-    await axios.get(`http://localhost:5500/cart/${username}`, {
+    await axios.get(`https://m-duka.onrender.com/cart/${username}`, {
       headers: {
         Authorization: `Bearer ${user}`
       }
@@ -34,7 +34,7 @@ export const useCartStore = defineStore('cart', () => {
 
   const addToCart = async (customer, productId, name, image, price, quantity) => {
     // Check if item already exists in cartItems array
-    await axios.post("http://localhost:5500/cart/add", {customer, productId, name, image, price, quantity },
+    await axios.post("https://m-duka.onrender.com/cart/add", {customer, productId, name, image, price, quantity },
         { headers: { Authorization: `Bearer ${user}` }}
       ).then((response) => {
         console.log(response.data)
@@ -53,7 +53,7 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   const removeFromCart = async (id) => {
-    await axios.delete(`http://localhost:5500/cart/delete/${id}`,
+    await axios.delete(`https://m-duka.onrender.com/cart/delete/${id}`,
     { headers: { Authorization: `Bearer ${user}` }})
     .then(response => {
       console.log(response.data)
@@ -70,7 +70,7 @@ export const useCartStore = defineStore('cart', () => {
     if (item) {
       item.quantity+=quantity
       // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
-      await axios.put(`http://localhost:5500/cart/update/${id}`, {quantity: item.quantity++}, {
+      await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity: item.quantity++}, {
         headers: { Authorization: `Bearer ${user}` }
       }).then(response => {
         console.log(response.data);
@@ -84,7 +84,7 @@ export const useCartStore = defineStore('cart', () => {
     if (item) {
       item.quantity-=quantity
       // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
-      await axios.put(`http://localhost:5500/cart/update/${id}`, {quantity:item.quantity}, {
+      await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity:item.quantity}, {
         headers: { Authorization: `Bearer ${user}` }
       }).then(response => {
         console.log(response.data);

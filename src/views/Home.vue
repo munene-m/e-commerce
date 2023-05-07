@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Books from '../components/Items.vue'
 import SearchIcon from '../components/icons/SearchIcon.vue'
@@ -9,6 +9,7 @@ import clothes from '../assets/clothes.jpg'
 import tech from '../assets/tech.jpg'
 import furniture from '../assets/furniture.jpg'
 import kitchenware from '../assets/kitchenware.jpg'
+
 
 const router = useRouter()
 const searchItem = ref('')
@@ -45,7 +46,7 @@ const categories = [
 </script>
 
 <template>
-  <div class="md:w-3/4 w-11/12 m-auto my-24 flex items-center flex-col font-open-sans">
+  <div  class="md:w-3/4 w-11/12 m-auto my-24 flex items-center flex-col font-open-sans">
     <img class="absolute w-inherit rounded-3xl h-3/4 md:h-2/3 bg-cover" src="../assets/shopping-cart.jpg" alt=""/>
     <div class="relative flex items-start justify-center flex-col mt-14 md:mt-24 lg:mt-16 md:mx-4 mx-2 rounded p-2">
       <h1 class="text-emerald-800 text-5xl md:text-5xl font-bold md:w-5/6">
@@ -59,7 +60,7 @@ const categories = [
       </button>
     </div>
   </div>
-  <div class="relative pt-48 xl:pt-56">
+  <div class="relative pt-48 xl:pt-56" data-aos="fade-down" data-aos-duration="1000">
     <h2 class="text-emerald-800 font-bold text-xl text-center sm:text-center md:text-start sm:ml-auto md:ml-24">
       Shop from our categories
     </h2>

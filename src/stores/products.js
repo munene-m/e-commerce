@@ -22,7 +22,7 @@ export const useProductStore = defineStore('product', () => {
               },
         }
         
-        await axios.post("http://localhost:5500/products/create", formData, config)
+        await axios.post("https://m-duka.onrender.com/products/create", formData, config)
         .then((response) => {
             console.log(response.data)
         }).catch((err) => console.log(err))
@@ -46,7 +46,7 @@ export const useProductStore = defineStore('product', () => {
               },
         }
         
-        await axios.put(`http://localhost:5500/products/update/${id}`, formData, config)
+        await axios.put(`https://m-duka.onrender.com/products/update/${id}`, formData, config)
         .then((response) => {
             console.log(response.data)
         }).catch((err) => console.log(err))
