@@ -17,7 +17,7 @@ const router = useRouter()
 const cartItems = ref([])
 
 async function getCartItems() {
-  await axios.get(`http://localhost:5500/cart/${authStore.username}`, {
+  await axios.get(`https://m-duka.onrender.com/cart/${authStore.username}`, {
     headers: {
       Authorization: `Bearer ${authStore.user}`
     }
