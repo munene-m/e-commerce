@@ -23,12 +23,13 @@ function addToCart(customer, id, name, quantity, image, price) {
 const items = ref([])
 
 async function getProducts() {
-  await axios
-    .get('https://m-duka.onrender.com/products', {
-      headers: {
-        Authorization: `Bearer ${authStore.user}`
-      }
-    })
+  await axios.get('https://m-duka.onrender.com/products', 
+    // {
+    //   // headers: {
+    //   //   Authorization: `Bearer ${authStore.user}`
+    //   // }
+    // }
+    )
     .then((response) => {
       items.value.push(response.data)
       console.log(response.data)
