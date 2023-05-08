@@ -8,6 +8,7 @@ import { useProductStore } from '../stores/products'
 import Modal from './Modal.vue'
 import Popup from './Popup.vue'
 import axios from 'axios'
+import router from '../router'
 
 const cartStore = useCartStore()
 const authStore = useAuthStore()
@@ -118,6 +119,9 @@ async function handleModalSubmit(id) {
     formData.image = ""
   } ,1000)
 }
+function productDetails (id) {
+  router.push({ path: `/product/${id}` })
+}
 </script>
 
 <template>
@@ -129,6 +133,7 @@ async function handleModalSubmit(id) {
       v-for="product in filteredProducts"
       :key="product._id"
       class="p-4 rounded-lg sm:w-5/6 w-full h-full flex flex-col items-start mr-6"
+      @click="productDetails(product._id)"
     >
       <img class="w-full h-full rounded object-cover" :src="product.image" :alt="product.name" />
       <p
