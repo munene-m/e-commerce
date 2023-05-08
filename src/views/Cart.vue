@@ -48,7 +48,8 @@ async function increase(id, quantity) {
 async function decrease(id, quantity) {
     const item = cartItems.value.flatMap(items => items).find(item => item._id === id)
     quantity--
-    localStorage.setItem("cart", JSON.stringify(cartItems.value))
+    const newItem = cartItems.value.flatMap(items => items)
+    localStorage.setItem("cart", JSON.stringify(newItem))
     await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity}, {
       headers: { Authorization: `Bearer ${authStore.user}`}
     }).then((response) => {
