@@ -71,7 +71,8 @@ export const useCartStore = defineStore('cart', () => {
     console.log(item);
     if (item) {
       item.quantity+=quantity
-      localStorage.setItem("cart", JSON.stringify(cart.cartItems))
+    localStorage.setItem("cart", JSON.stringify(cart.cartItems))
+
       await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity: item.quantity++}, {
         headers: { Authorization: `Bearer ${user}` }
       }).then(response => {
@@ -85,7 +86,7 @@ export const useCartStore = defineStore('cart', () => {
     const item = cart.cartItems.find((item) => item._id === id)
     if (item) {
       item.quantity-=quantity
-      localStorage.setItem("cart", JSON.stringify(cart.cartItems))
+    localStorage.setItem("cart", JSON.stringify(cart.cartItems))
       await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity:item.quantity}, {
         headers: { Authorization: `Bearer ${user}` }
       }).then(response => {
