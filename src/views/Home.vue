@@ -48,7 +48,7 @@ const categories = [
 <template>
   <div  class="md:w-3/4 w-11/12 m-auto my-24 flex items-center flex-col font-open-sans">
     <img class="absolute w-inherit rounded-3xl h-3/4 md:h-2/3 bg-cover" src="../assets/shopping-cart.jpg" alt=""/>
-    <div class="relative flex items-start justify-center flex-col mt-14 md:mt-24 lg:mt-16 md:mx-4 mx-2 rounded p-2">
+    <div class="relative flex items-start backdrop-blur-sm backdrop-filter justify-center flex-col mt-14 md:mt-24 lg:mt-16 md:mx-4 mx-2 rounded p-2">
       <h1 class="text-emerald-800 text-5xl md:text-5xl font-bold md:w-5/6">
         Shopping and department store
       </h1>
