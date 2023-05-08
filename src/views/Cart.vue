@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed, ref } from 'vue'
+import { onMounted, computed, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cart'
 import { useAuthStore } from '../stores/auth'
@@ -43,7 +43,7 @@ async function increase(id, quantity) {
     //   item.quantity = response.data.quantity
     // })
     // .catch(err => console.log(err))
-    cartStore.decreaseQuantity(id, quantity)
+    cartStore.increaseQuantity(id, quantity)
 
 }
 async function decrease(id, quantity) {
@@ -70,6 +70,8 @@ onMounted(() => {
   console.log(cartItems.value)
   cartItems
   cartStore.cart.cartItems.length
+})
+watchEffect(() => {
   cartItem.value = JSON.parse(localStorage.getItem("cart"))
 })
 </script>
