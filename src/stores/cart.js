@@ -9,7 +9,6 @@ export const useCartStore = defineStore('cart', () => {
   const STORAGE_KEY = 'cartItems'
   const user = JSON.parse(localStorage.getItem("token"))
   const username = JSON.parse(localStorage.getItem("username"))
-
   const cart = reactive({
     cartItems: []
   })
@@ -46,6 +45,7 @@ export const useCartStore = defineStore('cart', () => {
              } else {
       // Otherwise, add item to cartItems array
              cart.cartItems.push({ ...item, quantity: 1 });
+             localStorage.setItem("cart", JSON.stringify(cart.cartItems))
     }
     console.log(cart.cartItems);
       })
