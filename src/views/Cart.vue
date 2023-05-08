@@ -43,7 +43,6 @@ async function increase(id, quantity) {
     //   item.quantity = response.data.quantity
     // })
     // .catch(err => console.log(err))
-    quantity++
     cartStore.increaseQuantity(id, quantity)
 
 }
@@ -56,9 +55,9 @@ async function decrease(id, quantity) {
     //   item.quantity = response.data.quantity
     // })
     // .catch(err => console.log(err))
-    if(quantity > 0){
+    // if(quantity > 0){
 
-    }
+    // }
     cartStore.decreaseQuantity(id, quantity)
 }
 
@@ -78,7 +77,19 @@ onMounted(() => {
 
 })
 watchEffect(() => {
-  cartItem.value = JSON.parse(localStorage.getItem("cart"))
+  // cartItem.value = JSON.parse(localStorage.getItem("cart"))
+  const updatedCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+// Update the cartItem reactive variable
+cartItem.value = updatedCart;
+
+// Update the quantity of items in the cart
+updatedCart.forEach((item) => {
+  const cartItemIndex = cartItem.value.findIndex((cartItem) => cartItem._id === item._id);
+  if (cartItemIndex !== -1) {
+    cartItem.value[cartItemIndex].quantity = item.quantity;
+  }
+});
 })
 </script>
 
