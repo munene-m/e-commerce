@@ -16,7 +16,7 @@ const router = useRouter()
 // let cartItems = computed(() => cartStore.cart.cartItems)
 const cartItems = ref([])
 
-const cartItem = JSON.parse(localStorage.getItem("cart"))
+const cartItem = ref([])
 
 
 async function getCartItems() {
@@ -67,13 +67,16 @@ onMounted(() => {
   console.log(cartItems.value)
   cartItems
   cartStore.cart.cartItems.length
+  cartItem.value = JSON.parse(localStorage.getItem("cart"))
 })
 </script>
 
 <template>
   <main v-if="isCart" class="font-open-sans relative mt-28 mb-20">
 
-  <div v-for="item in cartItem" :key="item._id">
+  <div v-for="item in cartItem" :key="item._id"
+  class="bg-slate-200 rounded p-2 m-auto mb-3 w-4/5 sm:w-2/3 md:w-1/2 grid grid-cols-1 sm:grid-cols-2 place-items-evenly"
+  >
     <img class="w-full sm:w-full md:w-40" :src="item.image" alt="" />
       <div class="flex flex-col items-start justify-between  sm:items-end sm:justify-between">
         <h1 class="text-emerald-800 font-bold text-lg text-center">{{ item.name }}</h1>
