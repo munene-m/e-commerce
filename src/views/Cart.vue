@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed, ref, watchEffect } from 'vue'
+import { onMounted, computed, ref, watchEffect, onUpdated } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cart'
 import { useAuthStore } from '../stores/auth'
@@ -76,21 +76,10 @@ onMounted(() => {
   cartItem.value = JSON.parse(localStorage.getItem("cart"))
 
 })
-watchEffect(() => {
-  // cartItem.value = JSON.parse(localStorage.getItem("cart"))
-  const updatedCart = JSON.parse(localStorage.getItem("cart")) || [];
-
-// Update the cartItem reactive variable
-cartItem.value = updatedCart;
-
-// Update the quantity of items in the cart
-updatedCart.forEach((item) => {
-  const cartItemIndex = cartItem.value.findIndex((cartItem) => cartItem._id === item._id);
-  if (cartItemIndex !== -1) {
-    cartItem.value[cartItemIndex].quantity = item.quantity;
-  }
-});
+onUpdated(() => {
+  cartItem.value = JSON.parse(localStorage.getItem("cart"))
 })
+
 </script>
 
 <template>
