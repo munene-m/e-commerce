@@ -85,7 +85,10 @@ export const useCartStore = defineStore('cart', () => {
   const decreaseQuantity = async (id, quantity) => {
     const item = cart.cartItems.find((item) => item._id === id)
     if (item) {
+      // item.quantity-=quantity
+      if(item.quantity > 0){
       item.quantity-=quantity
+      }
     localStorage.setItem("cart", JSON.stringify(cart.cartItems))
       await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity:item.quantity}, {
         headers: { Authorization: `Bearer ${user}` }

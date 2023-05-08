@@ -43,6 +43,7 @@ async function increase(id, quantity) {
     //   item.quantity = response.data.quantity
     // })
     // .catch(err => console.log(err))
+    quantity++
     cartStore.increaseQuantity(id, quantity)
 
 }
@@ -55,6 +56,9 @@ async function decrease(id, quantity) {
     //   item.quantity = response.data.quantity
     // })
     // .catch(err => console.log(err))
+    if(quantity > 0){
+
+    }
     cartStore.decreaseQuantity(id, quantity)
 }
 
