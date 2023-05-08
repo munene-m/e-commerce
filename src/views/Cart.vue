@@ -70,6 +70,8 @@ onMounted(() => {
   console.log(cartItems.value)
   cartItems
   cartStore.cart.cartItems.length
+  cartItem.value = JSON.parse(localStorage.getItem("cart"))
+
 })
 watchEffect(() => {
   cartItem.value = JSON.parse(localStorage.getItem("cart"))
