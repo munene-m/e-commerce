@@ -13,7 +13,7 @@ const router = useRouter()
 
 const cartStore = useCartStore()
 const authStore = useAuthStore()
-const length = authStore.cartItem(item => item.length)
+const length = authStore.cartItem.filter(item => item.length)
 
 
 const logOut = () => {
