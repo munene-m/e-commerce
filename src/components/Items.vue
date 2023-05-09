@@ -133,7 +133,6 @@ function productDetails (id) {
       v-for="product in filteredProducts"
       :key="product._id"
       class="p-4 rounded-lg sm:w-5/6 w-full h-full flex flex-col items-start mr-6"
-      @click="productDetails(product._id)"
     >
       <img class="w-full h-full rounded object-cover" :src="product.image" :alt="product.name" />
       <p
@@ -142,7 +141,8 @@ function productDetails (id) {
       >
         Out of stock!
       </p>
-      <h2 class="mt-2 font-bold text-emerald-800">{{ product.name }}</h2>
+      <h2 class="mt-2 font-bold text-emerald-800 cursor-pointer" @click="productDetails(product._id)"
+      >{{ product.name }}</h2>
       <p class="text-sm">{{ product.description }}</p>
       <p class="text-xs sm:text-sm">Price: {{ product.price }}</p>
       <button
