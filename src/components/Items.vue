@@ -120,9 +120,7 @@ async function handleModalSubmit(id) {
     formData.image = ""
   } ,1000)
 }
-function productDetails (id) {
-  router.push({ path: `/product/${id}` })
-}
+
 </script>
 
 <template>
@@ -142,7 +140,7 @@ function productDetails (id) {
       >
         Out of stock!
       </p>
-      <h2 class="mt-2 font-bold text-emerald-800 cursor-pointer" @click="productDetails(product._id)"
+      <h2 class="mt-2 font-bold text-emerald-800 cursor-pointer" @click="router.push({ path: `/product/${product._id}`})"
       >{{ product.name }}</h2>
       <p class="text-sm">{{ product.description }}</p>
       <p class="text-xs sm:text-sm">Price: {{ product.price }}</p>
