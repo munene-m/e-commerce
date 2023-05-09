@@ -5,11 +5,12 @@ import { required, helpers } from '@vuelidate/validators'
 import { useCartStore } from '../stores/cart'
 import { useAuthStore } from '../stores/auth'
 import { useProductStore } from '../stores/products'
+import { useRouter } from 'vue-router';
 import Modal from './Modal.vue'
 import Popup from './Popup.vue'
 import axios from 'axios'
-import router from '../router'
 
+const router = useRouter()
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 const productStore = useProductStore()
