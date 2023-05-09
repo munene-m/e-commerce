@@ -13,7 +13,7 @@ const props = defineProps({
 const productDetails = ref([])
 
 onMounted(() => {
-axios.get(`https://m-duka.onrender.com/product/${props.id}`)
+axios.get(`https://m-duka.onrender.com/products/product/${props.id}`)
 .then(response => {
     console.log(response.data)
     productDetails.value.push(response.data)
