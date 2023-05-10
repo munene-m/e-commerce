@@ -5,10 +5,12 @@ import { required, helpers } from '@vuelidate/validators'
 import { useCartStore } from '../stores/cart'
 import { useAuthStore } from '../stores/auth'
 import { useProductStore } from '../stores/products'
+import { useRouter } from 'vue-router';
 import Modal from './Modal.vue'
 import Popup from './Popup.vue'
 import axios from 'axios'
 
+const router = useRouter()
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 const productStore = useProductStore()
@@ -118,6 +120,7 @@ async function handleModalSubmit(id) {
     formData.image = ""
   } ,1000)
 }
+
 </script>
 
 <template>
@@ -137,7 +140,8 @@ async function handleModalSubmit(id) {
       >
         Out of stock!
       </p>
-      <h2 class="mt-2 font-bold text-emerald-800">{{ product.name }}</h2>
+      <h2 class="mt-2 font-bold text-emerald-800 cursor-pointer" @click="router.push({ path: `/product/${product._id}`})"
+      >{{ product.name }}</h2>
       <p class="text-sm">{{ product.description }}</p>
       <p class="text-xs sm:text-sm">Price: {{ product.price }}</p>
       <button
