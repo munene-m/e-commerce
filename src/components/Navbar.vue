@@ -15,7 +15,7 @@ const authStore = useAuthStore()
 
 const logOut = () => {
   authStore.logout()
-  router.push('/')
+  // router.push('/')
 }
 watchEffect(() => {
   if(!authStore.user){
