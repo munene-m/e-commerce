@@ -16,29 +16,24 @@ export const useAuthStore = defineStore({
         username,
         email,
         password
-      }).then(response => {
-        this.user = response.data.token;
-        localStorage.setItem("token", JSON.stringify(response.data.token));
-        if(response.data.email === "admin@email.com"){
-          this.admin = response.data.email
-        }
-      }).catch(err => console.log(err))
-
+      });
+      this.user = response.data.token;
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      if(response.data.email === "admin@email.com"){
+        this.admin = response.data.email
       }
     },
     async login(email, password) {
       const response = await axios.post('https://m-duka.onrender.com/auth/login', {
         email, password
-      }).then(response => {
-        this.user = response.data.token
-        localStorage.setItem("token", JSON.stringify(response.data.token))
-        localStorage.setItem("username", JSON.stringify(response.data.username))
-        if(response.data.email === "admin@email.com"){
-          this.admin = response.data.email
-          localStorage.setItem("adminEmail", JSON.stringify(response.data.email))
-        }
-      }).catch(err => console.log(err))
-
+      })
+      this.user = response.data.token
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      localStorage.setItem("username", JSON.stringify(response.data.username))
+      if(response.data.email === "admin@email.com"){
+        this.admin = response.data.email
+        localStorage.setItem("adminEmail", JSON.stringify(response.data.email))
+      }
     },
     async logout(){
       this.user = null
@@ -46,8 +41,8 @@ export const useAuthStore = defineStore({
       localStorage.removeItem("adminEmail")
       localStorage.removeItem("username")
     }
-  
-})
+  }
+})  
 
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot));
