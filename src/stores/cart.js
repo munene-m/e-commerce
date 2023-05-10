@@ -34,8 +34,8 @@ export const useCartStore = defineStore('cart', () => {
 
   const addToCart = async (customer, productId, name, image, price, quantity) => {
     // Check if item already exists in cartItems array
-    await axios.post("https://m-duka.onrender.com/cart/add", {customer, productId, name, image, price, quantity },
-        { headers: { Authorization: `Bearer ${user}` }}
+    await axios.post("https://m-duka.onrender.com/cart/add", {customer, productId, name, image, price, quantity }
+        // { headers: { Authorization: `Bearer ${user}` }}
       ).then((response) => {
         console.log(response.data)
         const item = response.data
