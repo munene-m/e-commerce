@@ -19,6 +19,7 @@ export const useAuthStore = defineStore({
       }).then(response => {
         this.user = response.data.token;
         localStorage.setItem("token", JSON.stringify(response.data.token));
+        localStorage.setItem("username", JSON.stringify(response.data.username))
         if(response.data.email === "admin@email.com"){
           this.admin = response.data.email
         }
