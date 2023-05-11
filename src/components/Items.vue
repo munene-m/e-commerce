@@ -145,7 +145,7 @@ async function handleModalSubmit(id) {
       <button v-if="authStore.user" @click="addToCart(authStore.username, product._id, product.name, product.quantity, product.image, product.price)" 
       class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
       > Add to cart</button>
-      <button v-else @click="router.push({path: "/login"})"
+      <button v-else @click="router.push({path: '/login'})"
       class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
       >Add to cart</button>
       <div v-if="authStore.admin">
