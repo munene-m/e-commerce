@@ -5,10 +5,12 @@ import { required, helpers } from '@vuelidate/validators'
 import { useCartStore } from '../stores/cart'
 import { useAuthStore } from '../stores/auth'
 import { useProductStore } from '../stores/products'
+import { useRouter } from 'vue-router'
 import Modal from './Modal.vue'
 import Popup from './Popup.vue'
 import axios from 'axios'
 
+const router = useRouter()
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 const productStore = useProductStore()
@@ -140,22 +142,16 @@ async function handleModalSubmit(id) {
       <h2 class="mt-2 font-bold text-emerald-800">{{ product.name }}</h2>
       <p class="text-sm">{{ product.description }}</p>
       <p class="text-xs sm:text-sm">Price: {{ product.price }}</p>
-      <button
-        v-if="!authStore.admin "
-        @click="
-          addToCart(authStore.username, product._id, product.name, product.quantity, product.image, product.price)
-        "
-        class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
-      >
-        Add to cart
-      </button>
-      <div v-else>
-        <button
-          @click="productForm()"
+      <button v-if="authStore.user" @click="addToCart(authStore.username, product._id, product.name, product.quantity, product.image, product.price)" 
+      class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
+      > Add to cart</button>
+      <button v-else @click="router.push({path: "/login"})"
+      class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
+      >Add to cart</button>
+      <div v-if="authStore.admin">
+        <button @click="productForm()"
           class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
-        >
-          Edit
-        </button>
+        >Edit</button>
         <Modal :show="showModal" @close="handleModal">
           <template #form>
             <div class="flex items-center justify-center w-full sm:w-5/6 m-auto">
@@ -222,12 +218,9 @@ async function handleModalSubmit(id) {
             </div>
           </template>
         </Modal>
-        <button
-          @click="removeItem(product._id)"
+        <button @click="removeItem(product._id)"
           class="bg-red-500 text-white rounded-3xl border-2 border-red-500 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500 mx-1"
-        >
-          Remove
-        </button>
+        >Remove</button>
       </div>
     </div>
   </div>
