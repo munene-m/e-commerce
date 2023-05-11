@@ -31,8 +31,9 @@ export const useCartStore = defineStore('cart', () => {
 
   const addToCart = async (customer, productId, name, image, price, quantity) => {
     // Check if item already exists in cartItems array
-    await axios.post("https://m-duka.onrender.com/cart/add", {customer, productId, name, image, price, quantity })
-    .then((response) => {
+    await axios.post("https://m-duka.onrender.com/cart/add", {customer, productId, name, image, price, quantity }
+        // { headers: { Authorization: `Bearer ${user}` }}
+      ).then((response) => {
         console.log(response.data)
         const item = response.data
         const itemInCart = cart.cartItems.find(cartItem => cartItem._id === response.data._id);
@@ -68,7 +69,8 @@ export const useCartStore = defineStore('cart', () => {
     console.log(item);
     if (item) {
       item.quantity+=quantity
-      // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
+      localStorage.setItem("cart", JSON.stringify(cart.cartItems))
+
       await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity: item.quantity++}, {
         headers: { Authorization: `Bearer ${user}` }
       }).then(response => {
@@ -84,7 +86,7 @@ export const useCartStore = defineStore('cart', () => {
       // item.quantity-=quantity
       if(item.quantity > 0){
       item.quantity-=quantity
-      // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
+      localStorage.setItem("cart", JSON.stringify(cart.cartItems))
       await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity:item.quantity}, {
         headers: { Authorization: `Bearer ${user}` }
       }).then(response => {
@@ -96,7 +98,7 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   return { cart, addToCart, getCartItems, removeFromCart, increaseQuantity, decreaseQuantity }
-})
+}})
 
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useCartStore, import.meta.hot))
