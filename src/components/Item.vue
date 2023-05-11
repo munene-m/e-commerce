@@ -26,7 +26,7 @@ axios.get(`https://m-duka.onrender.com/products/product/${props.id}`)
     <main class="relative font-open-sans mt-20">
         <div v-for="product in productDetails" :key="product._id" class="p-4 rounded-lg sm:w-5/6 w-full h-full flex flex-col items-start mr-6">
       <h2 class="border border-slate-400 pr-2 mb-1 text-xs rounded-xl bg-slate-100 text-slate-600 flex flex-row items-center"><TagIcon class="h-4"/>{{ product.category }} </h2>
-        <img :src="product.image" class="w-full h-full rounded object-cover" alt="" />
+        <img :src="product.image" class="w-52 h-full rounded object-cover" alt="" />
         <h2 class="mt-2 font-bold text-emerald-800">{{ product.name }}</h2>
         <p class="text-sm">{{ product.description }}</p>
         <p class="text-xs sm:text-sm">{{ product.price }}</p>
