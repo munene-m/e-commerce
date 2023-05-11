@@ -12,13 +12,10 @@ export const useCartStore = defineStore('cart', () => {
   const cart = reactive({
     cartItems: []
   })
-
-  
-
   // Load cart items from local storage on initialization
-  if (localStorage.getItem(STORAGE_KEY)) {
-    cart.cartItems = JSON.parse(localStorage.getItem(STORAGE_KEY))
-  }
+  // if (localStorage.getItem(STORAGE_KEY)) {
+  //   cart.cartItems = JSON.parse(localStorage.getItem(STORAGE_KEY))
+  // }
 
   async function getCartItems() {
     await axios.get(`https://m-duka.onrender.com/cart/${username}`, {
@@ -58,6 +55,7 @@ export const useCartStore = defineStore('cart', () => {
     .then(response => {
       console.log(response.data)
       cart.cartItems = cart.cartItems.filter((item) => item._id !== id)
+      localStorage.setItem("cart", JSON.stringify(cart.cartItems))
     })
     .catch(err => console.log(err))
     // cart.cartItems = cart.cartItems.filter((item) => item.id !== id)
@@ -69,7 +67,7 @@ export const useCartStore = defineStore('cart', () => {
     console.log(item);
     if (item) {
       item.quantity+=quantity
-      // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
+      localStorage.setItem("cart", JSON.stringify(cart.cartItems))
       await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity: item.quantity++}, {
         headers: { Authorization: `Bearer ${user}` }
       }).then(response => {
@@ -83,7 +81,7 @@ export const useCartStore = defineStore('cart', () => {
     const item = cart.cartItems.find((item) => item._id === id)
     if (item) {
       item.quantity-=quantity
-      // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
+      localStorage.setItem("cart", JSON.stringify(cart.cartItems))
       await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity:item.quantity}, {
         headers: { Authorization: `Bearer ${user}` }
       }).then(response => {
