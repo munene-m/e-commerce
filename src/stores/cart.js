@@ -31,26 +31,25 @@ export const useCartStore = defineStore('cart', () => {
 
   const addToCart = async (customer, productId, name, image, price, quantity) => {
     // Check if item already exists in cartItems array
-    await axios.post("https://m-duka.onrender.com/cart/add", {customer, productId, name, image, price, quantity }
-        // { headers: { Authorization: `Bearer ${user}` }}
-      ).then((response) => {
-        console.log(response.data)
-        const item = response.data
-        const itemInCart = cart.cartItems.find(cartItem => cartItem._id === response.data._id);
-            if (itemInCart) {
+    const itemInCart = cart.cartItems.find(cartItem => cartItem.productId === productId);
+  
+    if (itemInCart) {
       // If item already exists, increment quantity
-               itemInCart.quantity++;
-             } else {
+      itemInCart.quantity++;
+    } else {
       // Otherwise, add item to cartItems array
-             cart.cartItems.push({ ...item, quantity: 1 });
-             localStorage.setItem("cart", JSON.stringify(cart.cartItems))
-
+      await axios.post("https://m-duka.onrender.com/cart/add", {customer, productId, name, image, price, quantity })
+        .then((response) => {
+          const item = response.data;
+          cart.cartItems.push({ ...item, quantity: 1 });
+          localStorage.setItem("cart", JSON.stringify(cart.cartItems));
+        })
+        .catch((err) => console.log(err))
     }
+  
     console.log(cart.cartItems);
-      })
-      .catch((err) => console.log(err))
   }
-
+  
   const removeFromCart = async (id) => {
     await axios.delete(`https://m-duka.onrender.com/cart/delete/${id}`,
     { headers: { Authorization: `Bearer ${user}` }})
