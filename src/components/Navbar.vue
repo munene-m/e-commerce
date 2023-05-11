@@ -17,6 +17,11 @@ const logOut = () => {
   authStore.logout()
   router.push('/')
 }
+// watchEffect(() => {
+//   if(!authStore.user){
+//     router.push("/")
+//   }
+// })
 
   let showMenu = ref(false)
   function toggleNav() {
