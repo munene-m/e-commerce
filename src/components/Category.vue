@@ -6,8 +6,8 @@ import { useCartStore } from '../stores/cart'
 const authStore = useAuthStore()
 const cartStore = useCartStore()
 
-function addToCart(item) {
-  cartStore.addToCart(item)
+function addToCart(customer, id, name, quantity, image, price) {
+  cartStore.addToCart(customer, id, name, quantity, image, price)
   console.log(cartStore.cart.cartItems)
 }
 const props = defineProps({
@@ -31,10 +31,12 @@ async function getProducts() {
 onMounted(() => {
   getProducts()
 })
+const username = JSON.parse(localStorage.getItem('username'))
+
 </script>
 
 <template>
-  <main class="relative mt-20 font-open-sans" v-if="products.length">
+  <main class="relative mt-20 font-open-sans h-screen" v-if="products.length">
     <h2 class="font-bold text-emerald-800 text-xl text-center">{{ category }}</h2>
     <div
       v-for="(items, index) in products"
@@ -52,7 +54,7 @@ onMounted(() => {
         <p class="text-xs sm:text-sm">{{ product.price }}</p>
         <button
           v-if="!authStore.admin"
-          @click="addToCart(product)"
+          @click="addToCart(username, product._id, product.name, product.image, product.price, product.quantity)"
           class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
         >
           Add to cart

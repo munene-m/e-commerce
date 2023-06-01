@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
+import { useCartStore } from '../stores/cart'
 import axios from 'axios'
 import TagIcon from '../components/icons/TagIcon.vue'
 const authStore = useAuthStore()
+const cartStore = useCartStore()
 const categories = ['Clothes', 'Tech', 'Kitchenware', 'Furniture', 'Sneakers']
 
 function addToCart(customer, id, name, quantity, image, price) {
