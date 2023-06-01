@@ -4,7 +4,7 @@ import CartIcon from './icons/CartIcon.vue';
 import PersonIcon from './icons/PersonIcon.vue';
 import axios from 'axios';
 import { useCartStore } from '../stores/cart';
-import { onMounted, ref, watchEffect } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 
@@ -28,17 +28,17 @@ const logOut = () => {
   return (showMenu.value = !showMenu.value);
   }
   const cartItems = ref([])
-  const cartItemsLength = ref("")
+  const cartItemsLength = ref(0)
 
-  watchEffect(() => {
-    if(cartItems.value > 0) {
-      for (let i = 0; i < cartItems.value.length; i++) {
-        cartItemsLength.value === cartItems.value.length
-      }
-    } else {
-      cartItemsLength.value = 0
-    }
-  })
+  // watchEffect(() => {
+  //   if(cartItems.value > 0) {
+  //     for (let i = 0; i < cartItems.value.length; i++) {
+  //       cartItemsLength.value === cartItems.value.length
+  //     }
+  //   } else {
+  //     cartItemsLength.value = 0
+  //   }
+  // })
 async function getCartItems() {
   await axios.get(`https://m-duka.onrender.com/cart/${authStore.username}`, {
     headers: {
@@ -46,12 +46,13 @@ async function getCartItems() {
     }
   }).then(response => {
     cartItems.value.push(response.data)
+    cartItemsLength.value = response.data.length
     console.log(response.data);
   }).catch(err => console.log(err))
 }
 onMounted(() => {
   getCartItems()
-  cartItems
+  // cartItems
 })
 </script>
 
