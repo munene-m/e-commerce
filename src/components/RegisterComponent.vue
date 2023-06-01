@@ -25,9 +25,7 @@ const rules = computed(() => {
         username: { required: helpers.withMessage("Username is required", required) },
         email: { required: helpers.withMessage("Email is required", required), email },
         password: { required: helpers.withMessage("Password is required", required), minLength:minLength(6)},
-        confirmPassword: { required: helpers.withMessage("The entered passwords do not match", required), sameAs: sameAs(formData.password) },
-        role: { required: helpers.withMessage("Category is required", required) }
-    }
+        confirmPassword: { required: helpers.withMessage("The entered passwords do not match", required), sameAs: sameAs(formData.password) }    }
 })
 const v$ = useVuelidate(rules, formData)
 const handleSubmit = async () =>{
@@ -35,12 +33,11 @@ const handleSubmit = async () =>{
     if(result){
         authStore.signup(formData.username, formData.email, formData.password)
     }
-    setTimeout(() => {
         formData.username = "",
         formData.email = "",
         formData.password  = "",
         formData.confirmPassword = ""
-    }, 1000)
+   
 }
 </script>
 <template>
