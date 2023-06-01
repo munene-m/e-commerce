@@ -38,7 +38,11 @@ export const useCartStore = defineStore('cart', () => {
       itemInCart.quantity++;
     } else {
       // Otherwise, add item to cartItems array
-      await axios.post("https://m-duka.onrender.com/cart/add", {customer, productId, name, image, price, quantity })
+      await axios.post("https://m-duka.onrender.com/cart/add", {customer, productId, name, image, price, quantity },{
+        headers:{
+          Authorization: `Bearer ${user}`
+        }
+      })
         .then((response) => {
           const item = response.data;
           cart.cartItems.push({ ...item, quantity: 1 });
@@ -63,41 +67,9 @@ export const useCartStore = defineStore('cart', () => {
     // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
   }
 
-  const increaseQuantity = async (id, quantity) => {
-    const item = cart.cartItems.find((item) => item._id === id)
-    console.log(item);
-    if (item) {
-      item.quantity+=quantity
-      localStorage.setItem("cart", JSON.stringify(cart.cartItems))
+  return { cart, addToCart, getCartItems, removeFromCart }
 
-      await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity: item.quantity++}, {
-        headers: { Authorization: `Bearer ${user}` }
-      }).then(response => {
-        console.log(response.data);
-        // cart.cartItems = cart.cartItems.filter((item) => item._id !== id)
-        // cart.cartItems.push(response.data)
-      }).catch(err => console.log(err))
-    }
-  }
-  const decreaseQuantity = async (id, quantity) => {
-    const item = cart.cartItems.find((item) => item._id === id)
-    if (item) {
-      // item.quantity-=quantity
-      if(item.quantity > 0){
-      item.quantity-=quantity
-      localStorage.setItem("cart", JSON.stringify(cart.cartItems))
-      await axios.put(`https://m-duka.onrender.com/cart/update/${id}`, {quantity:item.quantity}, {
-        headers: { Authorization: `Bearer ${user}` }
-      }).then(response => {
-        console.log(response.data);
-        // cart.cartItems = cart.cartItems.filter((item) => item._id !== id)
-        // cart.cartItems.push(response.data)
-      }).catch(err => console.log(err))
-    }
-  }
-
-  return { cart, addToCart, getCartItems, removeFromCart, increaseQuantity, decreaseQuantity }
-}})
+})
 
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useCartStore, import.meta.hot))
