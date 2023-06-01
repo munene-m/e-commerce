@@ -25,7 +25,7 @@ export const useCartStore = defineStore('cart', () => {
       }
     }).then(response => {
       cart.cartItems.push(response.data)
-      console.log(response.data);
+      // console.log(response.data);
     }).catch(err => console.log(err))
   }
 
@@ -58,7 +58,7 @@ export const useCartStore = defineStore('cart', () => {
     await axios.delete(`https://m-duka.onrender.com/cart/delete/${id}`,
     { headers: { Authorization: `Bearer ${user}` }})
     .then(response => {
-      console.log(response.data)
+      // console.log(response.data)
       cart.cartItems = cart.cartItems.filter((item) => item._id !== id)
       localStorage.setItem("cart", JSON.stringify(cart.cartItems))
     })

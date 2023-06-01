@@ -26,7 +26,7 @@ async function getCartItems() {
     }
   }).then(response => {
     cartItems.value.push(response.data)
-    console.log(response.data);
+    // console.log(response.data);
   }).catch(err => console.log(err))
 }
 

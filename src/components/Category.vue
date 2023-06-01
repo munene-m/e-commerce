@@ -8,7 +8,7 @@ const cartStore = useCartStore()
 
 function addToCart(customer, id, name, quantity, image, price) {
   cartStore.addToCart(customer, id, name, quantity, image, price)
-  console.log(cartStore.cart.cartItems)
+  // console.log(cartStore.cart.cartItems)
 }
 const props = defineProps({
   category: {
@@ -22,7 +22,7 @@ async function getProducts() {
       headers: { Authorization: `Bearer ${authStore.user}` }
     })
     .then((response) => {
-      console.log(response.data)
+      // console.log(response.data)
       products.value.push(response.data)
     })
     .catch((err) => console.log(err))
