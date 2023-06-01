@@ -118,6 +118,7 @@ async function handleModalSubmit(id) {
     formData.image = ""
   } ,1000)
 }
+const username = JSON.parse(localStorage.getItem('username'))
 </script>
 
 <template>
@@ -141,10 +142,8 @@ async function handleModalSubmit(id) {
       <p class="text-sm">{{ product.description }}</p>
       <p class="text-xs sm:text-sm">Price: {{ product.price }}</p>
       <button
-        v-if="!authStore.admin "
-        @click="
-          addToCart(authStore.username, product._id, product.name, product.quantity, product.image, product.price)
-        "
+        v-if="!authStore.admin"
+        @click="addToCart( username, product._id, product.name, product.quantity, product.image, product.price)"
         class="bg-emerald-800 text-white rounded-3xl border-2 border-emerald-800 px-3 py-1 mt-2 text-xs cursor-pointer hover:scale-95 transition duration-500"
       >
         Add to cart
