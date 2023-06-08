@@ -33,7 +33,7 @@ const handleSubmit = async () => {
     const result = await v$.value.$validate()
     if(result) {
         productStore.addProduct(formData.name, formData.description, formData.quantity, formData.itemsInStock, formData.price, formData.selectedCategory, formData.image)
-        showModal.value = false
+        // showModal.value = false
     }
     setTimeout(() => {
         formData.name = "",
@@ -61,7 +61,7 @@ const handleSubmit = async () => {
                     <label class="block" for="name">Quantity</label>
                     <input placeholder="e.g 200" type="text" v-model="formData.quantity" class="text-sm outline-transparent w-full  h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
                     <br>
-                    <label class="block" for="name">Quantity</label>
+                    <label class="block" for="name">Items in stock</label>
                     <input placeholder="e.g 200" type="text" v-model="formData.itemsInStock" class="text-sm outline-transparent w-full  h-8 border px-2 focus:outline-slate-500 border-slate-500 bg-slate-200 mt-2 mb-3 rounded">
                     <br>
                     <label class="mt-3" for="name">Price</label>
