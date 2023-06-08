@@ -18,9 +18,7 @@ const props = defineProps({
 })
 const products = ref([])
 async function getProducts() {
-  axios.get(`https://m-duka.onrender.com/products/item/${props.category}`, {
-      headers: { Authorization: `Bearer ${authStore.user}` }
-    })
+  axios.get(`https://m-duka.onrender.com/products/item/${props.category}`)
     .then((response) => {
       // console.log(response.data)
       products.value.push(response.data)
