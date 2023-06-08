@@ -32,7 +32,7 @@ const v$ = useVuelidate(rules, formData)
 const handleSubmit = async () => {
     const result = await v$.value.$validate()
     if(result) {
-        productStore.addProduct(formData.name, formData.description, formData.quantity, formData.itemsInStock, formData.price, formData.selectedCategory, formData.image)
+        productStore.addProduct(formData.name, formData.description, formData.quantity, formData.itemsInStock, formData.selectedCategory, formData.price, formData.image)
         // showModal.value = false
     }
     setTimeout(() => {
