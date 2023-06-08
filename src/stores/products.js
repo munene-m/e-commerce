@@ -4,7 +4,7 @@ import axios from 'axios'
 export const useProductStore = defineStore('product', () => {
   const user = JSON.parse(localStorage.getItem("token"));
 
-  async function addProduct(name, description, quantity, itemsInStock, price, image) {
+  async function addProduct(name, description, quantity, itemsInStock, category, price, image) {
         const formData = new FormData();
         const boundary = Math.random().toString().substring(2);
         formData.append('name', name);
