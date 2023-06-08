@@ -32,7 +32,7 @@ async function getProducts() {
     )
     .then((response) => {
       items.value.push(response.data)
-      console.log(response.data)
+      // console.log(response.data)
     })
     .catch((err) => console.log(err))
 }
