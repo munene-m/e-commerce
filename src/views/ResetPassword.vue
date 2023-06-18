@@ -13,7 +13,7 @@ import { ref } from 'vue';
 
 const email = ref("")
 async function reset(){
-    const response = await axios.post("http://localhost:5500/auth/reset",{
+    const response = await axios.post("https://m-duka.onrender.com/auth/reset",{
         email: email.value
     })
     console.log(response.data)
