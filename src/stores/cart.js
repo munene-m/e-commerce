@@ -8,8 +8,8 @@ import axios from 'axios'
 export const useCartStore = defineStore('cart', () => {
   const STORAGE_KEY = 'cartItems'
   const user = JSON.parse(localStorage.getItem("token"))
-  const username = JSON.parse(localStorage.getItem("username"))
-  const cartItem = JSON.parse(localStorage.getItem("cart"))
+  const username = localStorage.getItem("username")
+  const cartItem = localStorage.getItem("cart")
   const cart = reactive({
     cartItems: []
   })

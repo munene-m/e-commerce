@@ -36,6 +36,9 @@ const handleSubmit = async () =>{
         formData.password  = ""
     }, 900)
 }
+function reset(){
+  router.push("/reset")
+}
 </script>
 <template>
   <div class="mt-40">
@@ -66,6 +69,7 @@ const handleSubmit = async () =>{
         Don't have an account?
         <RouterLink class="text-emerald-800" to="/account">Create account</RouterLink>
       </p>
+      <button @click="reset">Reset password</button>
     </form>
   </div>
 </template>
