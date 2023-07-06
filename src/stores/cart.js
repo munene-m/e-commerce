@@ -7,7 +7,7 @@ import axios from 'axios'
 
 export const useCartStore = defineStore('cart', () => {
   const STORAGE_KEY = 'cartItems'
-  const user = JSON.parse(localStorage.getItem("token"))
+  const token = JSON.parse(localStorage.getItem("token"))
   const username = localStorage.getItem("username")
   const cartItem = localStorage.getItem("cart")
   const cart = reactive({
@@ -21,7 +21,7 @@ export const useCartStore = defineStore('cart', () => {
   async function getCartItems() {
     await axios.get(`https://m-duka.onrender.com/cart/${username}`, {
       headers: {
-        Authorization: `Bearer ${user}`
+        Authorization: `Bearer ${token}`
       }
     }).then(response => {
       cart.cartItems.push(response.data)
@@ -40,13 +40,14 @@ export const useCartStore = defineStore('cart', () => {
       // Otherwise, add item to cartItems array
       await axios.post("https://m-duka.onrender.com/cart/add", {customer, productId, name, image, price, quantity },{
         headers:{
-          Authorization: `Bearer ${user}`
+          Authorization: `Bearer ${token}`
         }
       })
         .then((response) => {
           const item = response.data;
           cart.cartItems.push({ ...item, quantity: 1 });
           localStorage.setItem("cart", JSON.stringify(cart.cartItems));
+          getCartItems()
         })
         .catch((err) => console.log(err))
     }
@@ -56,11 +57,12 @@ export const useCartStore = defineStore('cart', () => {
   
   const removeFromCart = async (id) => {
     await axios.delete(`https://m-duka.onrender.com/cart/delete/${id}`,
-    { headers: { Authorization: `Bearer ${user}` }})
+    { headers: { Authorization: `Bearer ${token}` }})
     .then(response => {
       // console.log(response.data)
       cart.cartItems = cart.cartItems.filter((item) => item._id !== id)
       localStorage.setItem("cart", JSON.stringify(cart.cartItems))
+      getCartItems()
     })
     .catch(err => console.log(err))
     // cart.cartItems = cart.cartItems.filter((item) => item.id !== id)
