@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -74,8 +73,7 @@ const router = createRouter({
 
 const currentUser = () => {
   return new Promise(( resolve, reject ) => {
-    const authStore = useAuthStore();
-    const token = authStore.user;
+    const token = JSON.parse(localStorage.getItem("token"))
     resolve(token);
     reject
   })
@@ -83,8 +81,7 @@ const currentUser = () => {
 
 const isAdmin = () => {
   return new Promise(( resolve, reject ) => {
-    const authStore = useAuthStore();
-    const admin = authStore.admin;
+    const admin = localStorage.getItem("admin")
     resolve(admin);
     reject
   })
