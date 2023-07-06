@@ -1,44 +1,48 @@
 <script setup>
-import { reactive, computed, watchEffect } from "vue";
-import { useVuelidate } from '@vuelidate/core'
-import { required, minLength, email, helpers } from '@vuelidate/validators'
+import { reactive} from 'vue'
 import { useAuthStore } from '../stores/auth'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const authStore = useAuthStore()
 const router = useRouter()
 
-watchEffect(() => {
-  if(authStore.user){
-    router.push("/cart")
-  }
-
-})
 
 const formData = reactive({
-    email: "",
-    password: "",
+  email: '',
+  password: '',
+  emailError: '',
+  passwordError: ''
 })
-const rules = computed(() => {
-    return{
-        email: { required: helpers.withMessage("Email is required", required), email },
-        password: { required: helpers.withMessage("Password is required", required), minLength:minLength(6)},
-    }
-})
-const v$ = useVuelidate(rules, formData)
-const handleSubmit = async () =>{
-    const result = await v$.value.$validate()
-    if(result){
-        authStore.login(formData.email, formData.password)
-    }
-    setTimeout(() => {
-        formData.email = "",
-        formData.password  = ""
-    }, 900)
+
+const handleSubmit = async () => {
+  formData.password === ''
+    ? (formData.passwordError = 'Please enter your password')
+    : (formData.passwordError = '')
+
+  formData.email === ''
+    ? (formData.emailError = 'Please enter your email')
+    : (formData.emailError = '')
+  try {
+    const response = await axios.post('https://m-duka.onrender.com/auth/login', {
+      email: formData.email,
+      password: formData.password
+    })
+    console.log(response.data)
+
+    localStorage.setItem('token', JSON.stringify(response.data.token))
+    localStorage.setItem('username', JSON.stringify(response.data.username))
+    response.data.email === 'admin@email.com'
+      ? localStorage.setItem('adminEmail', response.data.email)
+      : localStorage.removeItem('adminEmail')
+    
+    router.push({name: "cart"})
+    
+    return
+  } catch (error) {
+    console.log(error)
+  }
 }
-// function reset(){
-//   router.push("/reset")
-// }
 </script>
 <template>
   <div class="mt-40">
@@ -46,25 +50,33 @@ const handleSubmit = async () =>{
       <h3 class="text-center font-bold text-emerald-800 m-5 text-2xl">LOG IN</h3>
       <label class="block text-base" for="email">Email address</label><br />
       <input
-      class="w-full mb-1 pb-2 outline-none border-b-2 border-b-emerald-800 text-sm"
-       type="email" v-model="formData.email" id="email" name="email" />
-      <p class="text-red-500 text-sm" v-if="v$.email.$error">{{ v$.email.$errors[0].$message }}</p>
+        class="w-full mb-1 pb-2 outline-none border-b-2 border-b-emerald-800 text-sm"
+        type="email"
+        v-model="formData.email"
+        id="email"
+        name="email"
+      />
+      <p class="text-red-500 text-sm">{{ formData.emailError }}</p>
       <br />
 
       <label class="block text-base" for="password">Password</label><br />
       <input
-      class="w-full mb-1 pb-2 outline-none border-b-2 border-b-emerald-800 text-sm"
+        class="w-full mb-1 pb-2 outline-none border-b-2 border-b-emerald-800 text-sm"
         type="password"
         v-model="formData.password"
         id="password"
         name="password"
       />
-      <p class="text-red-500 text-sm" v-if="v$.password.$error">{{ v$.password.$errors[0].$message }}</p>
+      <p class="text-red-500 text-sm">{{ formData.passwordError }}</p>
       <br />
 
       <button
-      class="w-full bg-emerald-800 text-white rounded-xl px-2 py-3 mt-2 hover:scale-105 duration-500"
-      id="signupBtn" type="submit">Log in</button>
+        class="w-full bg-emerald-800 text-white rounded-xl px-2 py-3 mt-2 hover:scale-105 duration-500"
+        id="signupBtn"
+        type="submit"
+      >
+        Log in
+      </button>
       <p class="text-center">
         Don't have an account?
         <RouterLink class="text-emerald-800" to="/account">Create account</RouterLink>
@@ -73,4 +85,3 @@ const handleSubmit = async () =>{
     </form>
   </div>
 </template>
-

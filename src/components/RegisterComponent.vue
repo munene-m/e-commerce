@@ -1,44 +1,70 @@
 <script setup>
-import { reactive, computed, ref, watchEffect } from "vue";
-import { useVuelidate } from '@vuelidate/core'
-import { required, sameAs, minLength, email, helpers } from '@vuelidate/validators'
-import { useAuthStore } from '../stores/auth'
+import { reactive, ref, watch } from "vue";
 import { useRouter } from 'vue-router';
+import axios from "axios";
 
-const authStore = useAuthStore()
 const router = useRouter()
-watchEffect(() => {
-  if(authStore.user){
-    router.push("/cart")
-  }
 
-})
+const errorMsg = ref("")
 
 const formData = reactive({
     username:"",
     email: "",
     password: "",
     confirmPassword: "",
+    usernameError: "",
+    emailError: "",
+    passwordError: "",
+    confirmPasswordError: ""
 })
-const rules = computed(() => {
-    return{
-        username: { required: helpers.withMessage("Username is required", required) },
-        email: { required: helpers.withMessage("Email is required", required), email },
-        password: { required: helpers.withMessage("Password is required", required), minLength:minLength(6)},
-        confirmPassword: { required: helpers.withMessage("The entered passwords do not match", required), sameAs: sameAs(formData.password) }    }
-})
-const v$ = useVuelidate(rules, formData)
-const handleSubmit = async () =>{
-    const result = await v$.value.$validate()
-    if(result){
-        authStore.signup(formData.username, formData.email, formData.password)
-    }
-        formData.username = "",
-        formData.email = "",
-        formData.password  = "",
-        formData.confirmPassword = ""
-   
-}
+
+watch(formData, (newFormData) => {
+  if (newFormData.username !== "") {
+    formData.usernameError = "";
+  }
+  if (newFormData.email !== "") {
+    formData.emailError = "";
+  }
+  if (newFormData.password !== "") {
+    formData.passwordError = "";
+  }
+  if (newFormData.confirmPassword !== "") {
+    formData.confirmPasswordError = "";
+  }
+});
+
+const handleSubmit = async () => {
+  formData.username === ""
+    ? (formData.usernameError = "Please enter your username")
+    : (formData.usernameError = "");
+
+  formData.email === ""
+    ? (formData.emailError = "Please enter your email")
+    : (formData.emailError = "");
+
+  formData.password === "" || formData.password.length < 6
+    ? (formData.passwordError = "Please enter a password with at least 6 characters")
+    : formData.password !== formData.confirmPassword
+      ? (formData.confirmPasswordError = "Passwords do not match")
+      : (formData.confirmPasswordError = "");
+
+  try {
+    const response = await axios.post('https://m-duka.onrender.com/auth/register', {
+          username: formData.username, email: formData.email, password: formData.password 
+        })
+        console.log(response.data);
+
+        localStorage.setItem("token", JSON.stringify(response.data.token));
+        localStorage.setItem("username", JSON.stringify(response.data.username))
+        response.data.email === "admin@email.com" ? localStorage.setItem("adminEmail", response.data.email) : localStorage.removeItem("adminEmail");
+
+        router.push({name: "cart"})
+        return
+  } catch (error) {
+    errorMsg.value = error
+  }
+};
+
 </script>
 <template>
   <div class="mt-32">
@@ -52,14 +78,14 @@ const handleSubmit = async () =>{
         id="userName"
         name="userName"
       />
-      <p class="text-red-500 text-sm" v-if="v$.username.$error">{{ v$.username.$errors[0].$message }}</p>
+      <p class="text-red-500 text-sm">{{ formData.usernameError }}</p>
       <br />
 
       <label class="block text-base" for="email">Email address</label><br />
       <input
       class="w-full mb-1 pb-2 outline-none border-b-2 border-b-emerald-800 text-sm"
        type="email" v-model="formData.email" id="email" name="email" />
-      <p class="text-red-500 text-sm" v-if="v$.email.$error">{{ v$.email.$errors[0].$message }}</p>
+      <p class="text-red-500 text-sm">{{ formData.emailError }}</p>
       <br />
 
       <label class="block text-base" for="password">Password</label><br />
@@ -70,7 +96,7 @@ const handleSubmit = async () =>{
         id="password"
         name="password"
       />
-      <p class="text-red-500 text-sm" v-if="v$.password.$error">{{ v$.password.$errors[0].$message }}</p>
+      <p class="text-red-500 text-sm">{{ formData.passwordError }}</p>
       <br />
       <label class="block text-base" for="confirmPassword">Confirm Password</label><br />
       <input
@@ -80,7 +106,7 @@ const handleSubmit = async () =>{
         id="confirmPassword"
         name="confirmPassword"
       />
-      <p class="text-red-500 text-sm" v-if="v$.confirmPassword.$error">{{ v$.confirmPassword.$errors[0].$message }}</p>
+      <p class="text-red-500 text-sm" >{{ formData.confirmPasswordError }}</p>
       <br />
 
       <button
