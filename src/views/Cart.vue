@@ -41,6 +41,7 @@ async function increase(id, quantity) {
       headers: { Authorization: `Bearer ${authStore.user}`}
     }).then((response) => {
       item.quantity = response.data.quantity
+      cartStore.getCartItems()
     })
     .catch(err => console.log(err))
     // cartStore.increaseQuantity(id, quantity)
@@ -54,6 +55,7 @@ async function decrease(id, quantity) {
       headers: { Authorization: `Bearer ${authStore.user}`}
     }).then((response) => {
       item.quantity = response.data.quantity
+      cartStore.getCartItems()
     }).catch(err => console.log(err))
   }
   // cartStore.decreaseQuantity(id, quantity)
