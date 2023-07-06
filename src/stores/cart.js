@@ -47,8 +47,9 @@ export const useCartStore = defineStore('cart', () => {
           const item = response.data;
           cart.cartItems.push({ ...item, quantity: 1 });
           localStorage.setItem("cart", JSON.stringify(cart.cartItems));
-          getCartItems()
         })
+        getCartItems()
+
         .catch((err) => console.log(err))
     }
   
@@ -62,8 +63,9 @@ export const useCartStore = defineStore('cart', () => {
       // console.log(response.data)
       cart.cartItems = cart.cartItems.filter((item) => item._id !== id)
       localStorage.setItem("cart", JSON.stringify(cart.cartItems))
-      getCartItems()
     })
+    getCartItems()
+
     .catch(err => console.log(err))
     // cart.cartItems = cart.cartItems.filter((item) => item.id !== id)
     // localStorage.setItem(STORAGE_KEY, JSON.stringify(cart.cartItems))
